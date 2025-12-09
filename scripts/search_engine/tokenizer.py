@@ -5,10 +5,6 @@ import re
 okt = Okt()
 
 def decompose_korean(word):
-    """
-    복합어를 부분 문자열로 자동 분해
-    예: '신한금융' → ['신한금융','신한','금융','신한금','한금']
-    """
     result = set()
     word = word.lower()  # 소문자 통일
 
