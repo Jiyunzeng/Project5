@@ -2,8 +2,13 @@ from flask import Flask, request, jsonify
 from tokenizer import tokenize
 from tfidf import TfidfRanker
 from mongo_loader import load_news
+import os
 
 app = Flask(__name__)
+
+@app.route("/")
+def home():
+    return "TF-IDF Search API Running"
 
 print("🟦 [1] MongoDB에서 뉴스 로딩 중...")
 docs, titles, contents = load_news()
@@ -36,10 +41,10 @@ def search_news():
 
     return jsonify(result)
 
-# 🔥 React가 호출하는 엔드포인트
 @app.route("/news/search")
 def search_news_alias():
     return search_news()
 
 if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=9901)
+    port = int(os.environ.get("PORT", 5000))
+    app.run(host="0.0.0.0", port=port)
