@@ -1,0 +1,1344 @@
+/* =======================================================
+ * CSS: 전체 레이아웃 (Layout Container)
+ * 데스크톱에서 중앙 정렬을 유지합니다.
+ * ======================================================= */
+.layout-container {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    max-width: 1100px; /* 중앙 콘텐츠 + 양쪽 사이드바 + 갭 = 1100px */
+    margin: 0 auto;
+    padding: 10px 0;
+    gap: 20px;
+    /* Fixed 요소를 위해 overflow: visible 유지 */
+    overflow: visible; 
+}
+
+/* 🔵 중앙 뉴스 메인 영역 */
+.news-main {
+    flex-grow: 1; 
+    order: 2; /* 데스크톱 순서 (중앙) */
+}
+
+
+/* =======================================================
+ * 🥇 데스크톱 사이드바 (position: fixed)
+ * 🚨 핵심: calc() 값 (820px)과 top 값은 사용자 요구대로 유지
+ * 🚨 수정: 미디어 쿼리 시작점을 1100px로 올립니다.
+ * ======================================================= */
+@media (min-width: 1100px) { /* 🚨 1000px -> 1100px로 변경 */
+    .sidebar-left,
+    .sidebar-right {
+        width: 250px;
+        flex-shrink: 0;
+        
+        position: fixed; 
+        top: 295px; 
+        z-index: 5;
+        
+        margin-left: 0;
+        margin-right: 0;
+    }
+    
+    /* 1. 왼쪽 사이드바 위치 (사용자 요구대로 820px 유지) */
+    .sidebar-left {
+        order: 1;
+        left: calc(50% - 820px); /* ✅ 사용자 요구대로 유지 */
+        right: auto;
+    }
+
+    /* 2. 오른쪽 사이드바 위치 (사용자 요구대로 820px 유지) */
+    .sidebar-right {
+        order: 3;
+        right: calc(50% - 820px); /* ✅ 사용자 요구대로 유지 */
+        left: auto;
+    }
+}
+
+
+/* ------------------------------------------------------------- */
+/* 🥈 반응형 미디어 쿼리 (화면 너비 1099px 이하: 쌓기 & 100% 너비 보장)
+/* 🚨 수정: max-width를 1099px로 설정하여 전환 시점을 일치시킵니다.
+/* ------------------------------------------------------------- */
+@media (max-width: 1099px) { /* 🚨 1000px -> 1099px로 변경 */
+    .layout-container {
+        flex-direction: column;
+        max-width: 100%;
+        padding: 10px 15px; 
+        gap: 15px; 
+    }
+
+    /* 1. 사이드바 너비 100% 및 Fixed 해제 */
+    .sidebar-left,
+    .sidebar-right {
+        width: 100%;
+        position: static; /* Fixed 해제 */
+        top: auto;
+        left: auto !important; 
+        right: auto !important;
+    }
+    
+    /* 2. 중앙 영역 너비 100% 및 제약 해제 */
+    .news-main {
+        max-width: 100%; 
+        min-width: auto; 
+        width: 100%; 
+    }
+    
+    /* 3. 모바일 순서 재조정 */
+    .news-main {
+        order: 3; 
+    }
+    
+    .sidebar-left {
+        order: 1; 
+        margin-top: 10px;
+        margin-bottom: 10px; 
+    }
+
+    .sidebar-right {
+        order: 2; 
+        margin-top: 10px; 
+        margin-bottom: 0; 
+    }
+    
+    /* 사이드바 내부 섹션의 패딩을 컨테이너 패딩과 통일하거나 조정 가능 (옵션) */
+    .sidebar-section {
+        padding: 15px; /* 모바일에서 좌우 패딩을 더 넓게 조정 */
+    }
+}
+
+.sidebar-section {
+    background: #fcfcfc;
+    border: 1px solid #eee;
+    border-radius: 12px;
+    padding: 15px 12px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+}
+
+.sidebar-title {
+    font-size: 16px;
+    font-weight: 700;
+    color: #1e40af;
+    padding: 5px 8px 10px;
+    border-bottom: 1px solid #f0f0f0;
+    margin-bottom: 10px;
+}
+
+/* ===== 오른쪽 사이드바: 거래대금 Top 5 ===== */
+
+.stock-ranking-section {
+    margin-top: 0;
+}
+
+/* 기본 목록 초기화 */
+.stock-ranking-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+/* 각 아이템 카드 */
+.stock-ranking-item {
+    padding: 8px 10px;
+    border-radius: 8px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+    transition: background 0.15s ease, transform 0.1s ease;
+}
+
+.stock-ranking-item+.stock-ranking-item {
+    margin-top: 4px;
+}
+
+.stock-ranking-item:hover {
+    background: #f3f4f6;
+    transform: translateY(-1px);
+}
+
+/* 왼쪽: 순위 + 이름 */
+.stock-ranking-left {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+/* 순위 뱃지 */
+.stock-ranking-rank {
+    font-size: 11px;
+    font-weight: 700;
+    color: #1e40af;
+}
+
+/* 종목명 */
+.stock-ranking-name {
+    font-size: 13px;
+    font-weight: 500;
+    color: #111827;
+}
+
+/* 오른쪽: 거래대금 */
+.stock-ranking-amount {
+    font-size: 13px;
+    font-weight: 700;
+    color: #dc2626;
+    /* 빨간 포인트 */
+    white-space: nowrap;
+}
+
+
+/* ===== 3. 왼쪽 사이드바 (최근 본 기사) 스타일 (추가) ===== */
+.recent-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.recent-item {
+    padding: 8px 8px;
+    cursor: pointer;
+    border-radius: 6px;
+    transition: background 0.15s;
+}
+
+.recent-item:hover {
+    background: #f3f3f3;
+}
+
+.recent-category {
+    display: block;
+    font-size: 10px;
+    color: #888;
+    margin-bottom: 2px;
+}
+
+.recent-media {
+    display: block;
+    font-size: 13px;
+    color: #1e40af;
+    margin-bottom: 2px;
+}
+
+.recent-title {
+    font-size: 13px;
+    font-weight: 500;
+    color: #111827;
+    line-height: 1.4;
+    margin: 0;
+    /* 말줄임표 */
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    /* 두 줄까지 표시 */
+    -webkit-box-orient: vertical;
+}
+
+
+
+/* ===== 전체 컨테이너 ===== */
+.news-container {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 0 20px;
+    font-family: "Pretendard", "Segoe UI", sans-serif;
+    color: #222;
+    /* position: relative; 삭제 또는 static으로 변경 */
+    position: static; 
+}
+
+/* ===== 제목 ===== */
+.news-container h2 {
+    text-align: center;
+    font-size: 30px;
+    font-weight: 800;
+    margin-bottom: 28px;
+    color: #1e40af;
+    /* 파란색 포인트 */
+}
+
+.news-list {
+    list-style: none;
+    padding: 0;
+}
+
+.news-card {
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+    padding: 16px;
+    margin-bottom: 12px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s, background 0.2s;
+    cursor: pointer !important;
+}
+
+.news-text {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    flex-grow: 1;
+}
+
+.news-meta {
+    display: flex;
+    justify-content: space-between;
+    /* 왼쪽/오른쪽 나누기 */
+    align-items: center;
+    font-size: 12px;
+    color: #333;
+    margin-top: 8px;
+}
+
+.left-meta {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    /* 로고와 작성자 간 간격 */
+}
+
+.right-meta {
+    font-style: normal;
+    color: #888;
+    font-size: 12px;
+    display: flex;
+    align-items: center;
+}
+
+.news-card:hover {
+    transform: translateY(-2px);
+    background: rgba(255, 255, 255, 0.15);
+}
+
+.news-link {
+    display: block;
+    text-decoration: none;
+    color: inherit;
+}
+
+.news-content {
+    display: flex;
+    gap: 16px;
+}
+
+.news-image-wrapper {
+    flex-shrink: 0;
+}
+
+.news-image {
+    width: 220px;
+    height: 150px;
+    object-fit: cover;
+    object-position: center;
+    /* 가운데 기준으로 크롭 */
+}
+
+.news-text h3 {
+    font-size: 18px;
+    font-weight: 600;
+    margin: 0 0 8px;
+}
+
+.news-text p {
+    font-size: 14px;
+    margin: 0 0 8px;
+    color: #555;
+}
+
+.news-meta {
+    display: flex;
+    justify-content: space-between;
+    font-size: 12px;
+    color: #333;
+}
+
+.news-date {
+    font-style: italic;
+}
+
+.news-author {
+    font-weight: 600;
+}
+
+/* ===== 페이지네이션 ===== */
+.pagination {
+    position: sticky;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 14px;
+    margin: 30px 0 10px;
+    z-index: 1000;
+    /* 다른 요소 위에 표시 */
+}
+
+.pagination button {
+    background: #1e40af;
+    /* 파란 배경 */
+    color: #ffffff;
+    /* 흰색 글자 */
+    border: 1px solid #1e40af;
+    /* 파란 테두리 */
+    padding: 6px 14px;
+    border-radius: 9px;
+    /* ← 직각에 가깝게 */
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 13px;
+    transition: 0.2s;
+}
+
+.pagination button:hover:not(:disabled) {
+    transform: scale(1.05);
+    background: #1e3a8a;
+    border-color: #1e3a8a;
+}
+
+/* 현재 페이지에서 비활성(예: 이전 버튼) → 회색 버튼 */
+.pagination button:disabled {
+    background: #e5e7eb;
+    /* 연한 회색 배경 */
+    border-color: #e5e7eb;
+    /* 테두리도 회색 */
+    color: #9ca3af;
+    /* 글자 연한 회색 */
+    cursor: not-allowed;
+}
+
+
+.pagination span {
+    font-weight: 600;
+    color: #1e40af;
+}
+
+
+/* ===== 모달 ===== */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.6);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+.modal-content,
+.modal-meta,
+.modal-link {
+    padding-left: 25px;
+    padding-right: 25px;
+}
+
+/* --- 모달 헤더 (고정 영역) --- */
+.modal-header {
+    flex-shrink: 0;
+    /* 스크롤 되어도 줄어들지 않음 */
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 30px 30px 0px 20px;
+    border-bottom: 1px solid #f0f0f0;
+    background: #fff;
+    z-index: 10;
+    align-items: flex-start !important;
+    padding: 30px 30px 10px 60px !important;
+}
+
+/* 모달 전체 프레임 */
+.modal-content {
+    background: #fff;
+    width: 100%;
+    max-width: 900px;
+    height: 85vh;
+    /* 화면 높이의 85% */
+    max-height: 800px;
+    min-height: 500px;
+
+    border-radius: 20px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+
+    display: flex;
+    flex-direction: column;
+    /* 헤더(고정) + 바디(스크롤) 구조 */
+    overflow: hidden;
+    /* 모서리 둥글게 유지 */
+    position: relative;
+
+    /* 중요: 내부 여백 0으로 설정하여 스크롤바가 끝까지 가도록 함 */
+    padding: 0 !important;
+}
+
+.modal-close {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    border: none;
+    background: none;
+    font-size: 22px;
+    cursor: pointer;
+}
+
+.modal-meta {
+    display: flex;
+    justify-content: flex-start;
+    flex-wrap: wrap;
+    gap: 15px;
+    color: #555;
+    font-size: 14px;
+    margin-bottom: 10px;
+}
+
+/*.modal-link {*/
+/*  display: inline-block;*/
+/*  margin-top: auto;*/
+/*  padding-top: 10px;*/
+/*  padding-bottom: 10px;*/
+/*  color: #1e40af;*/
+/*  text-decoration: underline;*/
+/*  cursor: pointer;*/
+/*}*/
+
+.modal-title {
+    font-size: 30px;
+    font-weight: 700;
+    color: #111 !important;
+    margin: 0;
+    /* 불필요한 마진 제거 */
+
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    padding: 0px 50px 0px 50px !important;
+}
+
+/* 닫기 버튼 */
+.modal-close-btn {
+    border: none;
+    border-radius: 50%;
+    width: 45px;
+    height: 45px;
+    font-size: 40px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s;
+    margin-top: 2px;
+    color: #1e40af;
+    background: none !important;
+}
+
+/*.modal-close-btn:hover {*/
+/*  background: #e0e0e0;*/
+/*  color: #000;*/
+/*}*/
+
+/* --- 모달 바디 (스크롤 영역) --- */
+.modal-body {
+    flex-grow: 1;
+    /* 남은 공간 채우기 */
+    overflow-y: auto;
+    /* 세로 스크롤 허용 */
+    background-color: #fff;
+    font-family: 'Noto Sans KR', sans-serif;
+    color: #222;
+
+    padding: 30px 70px 50px 120px !important;
+}
+
+.modal-body>* {
+    padding-right: 60px !important;
+}
+
+/* 기사원문 버튼 (알약 모양) */
+.modal-origin-btn {
+    display: inline-block;
+    padding: 2px 10px 3px;
+    /* 크기 살짝 아담하게 */
+    border: 1px solid #d0d0d0;
+    border-radius: 100px;
+    font-size: 11px;
+    color: #555;
+    text-decoration: none;
+    background-color: #fff;
+    transition: all 0.2s;
+    margin-left: 2px;
+    white-space: nowrap;
+}
+
+.modal-origin-btn:hover {
+    background-color: #f5f5f5;
+    border-color: #999;
+    color: #000;
+}
+
+.modal-meta {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    align-items: center;
+}
+
+/* 모달 내부 요소 스타일 */
+.modal-body .modal-meta {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.95rem;
+    color: #555;
+    margin-bottom: 20px;
+}
+
+.modal-image-wrapper {
+    margin: 20px 0;
+    padding-bottom: 16px;
+    border-bottom: none !important;
+    /* 이미지 아래 선 제거 */
+    padding-right: 60px !important;
+}
+
+.modal-image {
+    max-width: 100%;
+    display: block;
+    margin: 0 auto;
+    border-radius: 10px;
+}
+
+.modal-article {
+    margin-top: 22px;
+}
+
+/* 문단 스타일 (파란색 바) */
+.article-paragraph {
+    display: flex;
+    gap: 12px;
+    margin-bottom: 20px;
+    min-height: 24px;
+    /* 최소 높이 확보 */
+}
+
+.paragraph-bar {
+    flex-shrink: 0;
+    width: 3px;
+    background: linear-gradient(180deg, #1976ff, #7eb7ff);
+    border-radius: 6px;
+}
+
+.article-text {
+    font-size: 16px;
+    line-height: 1.8;
+    color: #333;
+    width: 100%;
+    word-break: break-all;
+}
+
+.article-text p {
+    margin: 0;
+}
+
+/* --- 스크롤바 커스텀 (모달 바디에만 적용) --- */
+.modal-body::-webkit-scrollbar {
+    width: 8px;
+}
+
+.modal-body::-webkit-scrollbar-thumb {
+    background-color: #ccc;
+    border-radius: 10px;
+    background-clip: padding-box;
+    border: 2px solid transparent;
+}
+
+.modal-body::-webkit-scrollbar-thumb:hover {
+    background-color: #2c5f8d;
+}
+
+.modal-body::-webkit-scrollbar-track {
+    background-color: transparent;
+    margin: 10px 0;
+}
+
+/* ===== 카테고리 탭 ===== */
+.category-tabs {
+    display: flex;
+    justify-content: center;
+    overflow-x: auto;
+    gap: 12px;
+    margin-bottom: 26px;
+    padding-bottom: 4px;
+}
+
+.category-tabs button {
+    padding: 12px 20px;
+    border-radius: 24px;
+
+    background: #f9fafb;
+    /* 거의 흰색 */
+    border: 1px solid #f9fafb;
+    /* 아주 옅은 회색 테두리 */
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 15px;
+    color: #1e40af;
+
+    transition: all 0.25s ease;
+}
+
+
+/* 선택된 버튼 */
+.category-tabs button.active {
+    background: #1e40af;
+    /* 원래 파랑을 살짝 투명하게 */
+    color: white;
+}
+
+/* hover 시 조금 더 진해지는 투명 */
+.category-tabs button:hover:not(.active) {
+    background: rgba(229, 231, 235, 0.55);
+}
+
+.search-divider {
+    width: 100vw;
+    /* 화면 전체 가로 폭 */
+    height: 1px;
+    background: rgba(0, 0, 0, 0.06);
+    /* 살짝 더 옅게 */
+    margin: 8px 0 16px;
+    position: relative;
+    left: 50%;
+    transform: translateX(-50%);
+    /* 가운데 정렬 */
+}
+
+/* ☰ 세 줄 메뉴 아이콘 스타일 */
+.menu-toggle-icon {
+    /* 🚨 새로운 CSS 추가 */
+    width: 40px; /* 아이콘이 차지할 공간 */
+    height: 40px;
+    flex-shrink: 0; /* 공간이 좁아져도 줄어들지 않음 */
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-right: 5px; /* 검색어 입력창과의 간격 */
+    transition: 0.2s;
+    border-radius: 50%;
+}
+
+.menu-toggle-icon:hover {
+    background-color: #f0f0f0;
+}
+
+/* SVG 아이콘 스타일 */
+.menu-toggle-icon svg {
+    width: 24px;
+    height: 24px;
+    color: #1e40af; /* 파란색으로 아이콘 색상 설정 */
+}
+
+
+/* ===== 검색창 ===== */
+.search-box {
+    position: relative;  
+    width: 60%;
+    height: 48px;
+    margin: 0 auto 15px;
+    display: flex;
+    align-items: center;
+    background: #fff;
+    border-radius: 14px;
+    padding: 0 12px;
+    border: 1.5px solid #d7d7d7;
+    transition: all 0.25s ease;
+}
+
+/* focus 시 약간 파란 빛 + 그림자 */
+.search-box:focus-within {
+    border-color: #1e40af;
+    box-shadow: 0 0 8px rgba(30, 107, 255, 0.3);
+}
+
+/* 인풋 */
+.search-box input {
+    width: 100%;
+    border: none;
+    outline: none;
+    font-size: 15px;
+	padding-left: 0;
+}
+
+/* 아이콘 버튼 */
+.icon-btn {
+    width: 35px;
+    height: 35px;
+    border: none;
+    background: none;
+    padding: 0;
+    cursor: pointer;
+    flex-shrink: 0;
+    outline: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* 아이콘 크기 */
+.icon-btn svg {
+    width: 22px;
+    height: 22px;
+    stroke: #1e40af;
+    transition: 0.2s;
+}
+
+/* 클릭 반응 */
+.icon-btn:active svg {
+    transform: scale(0.88);
+}
+
+/* 강조 색상 */
+.highlight {
+    color: #1e40af;
+    font-weight: 700;
+}
+
+/* 언론사 로고 */
+.media-logo {
+    width: 70px;
+    height: 30px;
+    object-fit: contain;
+    margin-right: 6px;
+    opacity: 0.9;
+}
+
+
+/* Custom Dropdown Container */
+.sort-dropdown-container {
+    margin-left: auto;
+    margin-right: 0;
+    margin-bottom: 12px;
+
+    position: relative;
+    width: 120px;
+    z-index: 10;
+}
+
+/* Dropdown Trigger Button */
+.sort-dropdown-trigger {
+    width: 100%;
+    padding: 8px 12px;
+    border: 1px solid #ddd;
+
+    /* ⭐ 핵심 수정 1: 캡슐 모양(20px) 대신 모서리만 둥근 사각형(8px)으로 변경 */
+    border-radius: 8px;
+
+    background: white;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 14px;
+
+    white-space: nowrap;
+}
+
+.dropdown-arrow {
+    margin-left: 10px;
+    font-size: 10px;
+}
+
+/* Dropdown Menu - 핵심 스타일 */
+.sort-dropdown-menu {
+    position: absolute;
+    top: 110%;
+    /* 버튼 바로 아래 위치 */
+    width: 100%;
+    list-style: none;
+    padding: 0;
+    margin: 4px 0 0 0;
+    background: white;
+    border: 1px solid #ddd;
+
+    /* ⭐ 핵심 1: 모서리 둥글게 */
+    border-radius: 8px;
+
+    /* ⭐ 핵심 2: 내부 아이템(파란 배경)이 둥근 모서리를 덮지 않도록 자름 */
+    overflow: hidden;
+
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+/* Menu Item */
+.sort-dropdown-menu li {
+    padding: 10px 12px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+    font-size: 14px;
+}
+
+/* Hover Effect */
+.sort-dropdown-menu li:hover {
+    background-color: #f0f0f0;
+}
+
+/* Active/Selected Item Style (파란색 배경) */
+.sort-dropdown-menu li.active {
+    /* 이미지의 파란색 배경처럼 설정 */
+    background-color: #007bff;
+    color: white;
+}
+
+.sort-dropdown-menu li.active:hover {
+    /* 선택된 상태에서 호버 시 약간 어둡게 */
+    background-color: #0056b3;
+}
+
+/* ===== 뉴스 없음 메시지 (박스 없는 버전) ===== */
+.empty-message {
+    text-align: center;
+    margin-top: 50px;
+    font-size: 16px;
+    font-weight: 500;
+    color: #6b7280;
+
+    /* 아래 요소들 제거 */
+    background: none;
+    padding: 0;
+    border-radius: 0;
+    box-shadow: none;
+    backdrop-filter: none;
+    display: block;
+    /* inline-block 제거 */
+}
+
+.similarity-score {
+    color: #4CAF50;
+    font-weight: bold;
+    font-size: 0.85em;
+    margin-right: 8px;
+}
+
+
+/* 로딩 */
+.loading-message {
+    text-align: center;
+    padding: 40px;
+    color: #6b7280;
+    font-size: 1.1em;
+}
+
+/* 🔵 AI 요약란 스타일 */
+.ai-summary-section {
+    margin: 20px 0;
+    padding: 20px;
+    background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+    border-radius: 12px;
+    border-left: 4px solid #1e40af;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+.ai-summary-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 12px;
+    font-weight: 600;
+    color: #1e40af;
+    font-size: 16px;
+}
+
+.ai-icon {
+    font-size: 20px;
+}
+
+.summary-loading {
+    margin-left: auto;
+    font-size: 14px;
+    color: #64748b;
+}
+
+.ai-summary-loading {
+    display: flex;
+    justify-content: center;
+    padding: 20px;
+}
+
+.loading-dots {
+    display: flex;
+    gap: 4px;
+}
+
+.loading-dots span {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: #1e40af;
+    animation: dotPulse 1.4s infinite ease-in-out both;
+}
+
+.loading-dots span:nth-child(1) {
+    animation-delay: -0.32s;
+}
+
+.loading-dots span:nth-child(2) {
+    animation-delay: -0.16s;
+}
+
+@keyframes dotPulse {
+
+    0%,
+    80%,
+    100% {
+        transform: scale(0);
+        opacity: 0.5;
+    }
+
+    40% {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+.ai-summary-content {
+    line-height: 1.6;
+    color: #334155;
+    font-size: 15px;
+}
+
+.ai-summary-text {
+    max-height: 120px;
+    overflow-y: auto;
+}
+
+.ai-summary-empty {
+    color: #64748b;
+    font-style: italic;
+    text-align: center;
+    padding: 20px;
+    font-size: 14px;
+
+}
+
+
+/* 🔍 검색 힌트 (최초 검색 시 상단 표시) */
+.search-hint {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    padding: 12px 20px;
+    border-radius: 12px;
+    margin-bottom: 20px;
+    text-align: center;
+    font-weight: 500;
+}
+
+/* 🔥 인기 검색어 드롭다운 */
+.keyword-dropdown {
+  position: absolute;
+  top: calc(100% + 6px); /* 검색창과 간격 6px */
+  left: 0;
+  width: 100%;
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(12px); /* 🔥 유리 효과 */
+  border: 1px solid rgba(200, 200, 200, 0.35);
+  border-radius: 12px;
+
+  padding: 6px 0;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.08); /* 부드러운 그림자 */
+  z-index: 9999;
+
+  max-height: 240px;
+  overflow-y: auto;
+
+  animation: dropdownFade 0.18s ease-out; /* 🔥 부드러운 등장 */
+}
+
+/* 등장 애니메이션 */
+@keyframes dropdownFade {
+  from {
+    opacity: 0;
+    transform: translateY(-5px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.dropdown-item {
+  padding: 10px 14px;
+  cursor: pointer;
+  font-size: 14px;
+  color: #333;
+  transition: 0.15s ease;
+}
+
+.dropdown-item:hover {
+  background: rgba(30, 64, 175, 0.08); /* 옅은 파랑 */
+  color: #1e40af; /* 파란 글자 */
+}
+
+/* 🔥 인기 검색어 박스 */
+.trending-box {
+  width: 60%;
+  margin: 10px auto 20px;
+  background: #f0f4ff;
+  padding: 14px 16px;
+  border-radius: 12px;
+  border: 1px solid #c7d2fe;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+}
+
+.trending-title {
+  font-size: 14px;
+  font-weight: 600;
+  color: #1e3a8a;
+  margin-bottom: 10px;
+  display: block;
+}
+
+.trending-list {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.trending-item {
+  padding: 6px 12px;
+  font-size: 13px;
+  border-radius: 20px;
+  background: white;
+  border: 1px solid #93c5fd;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.trending-item:hover {
+  background: #dbeafe;
+  border-color: #60a5fa;
+}
+
+/* 자동완성  */
+.dropdown-item.active {
+  background-color: #e0edff;
+  color: #1e40af;
+}
+
+/* 🔵 오타 교정 바 전체 */
+.correction-bar {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+
+  width: 60%;
+  margin: 10px auto 20px;
+/*  padding: 14px 16px;*/
+
+  font-size: 14px;
+  color: #333;
+}
+
+/* 안내 문구 */
+.correction-bar span:first-child {
+  color: #555;
+  font-weight: 500;
+}
+
+/* 🔗 교정 단어 버튼 */
+.correction-link {
+  background: none;
+  border: none;
+  padding: 0;
+
+  color: #2563eb; /* 블루 포인트 */
+  font-weight: 600;
+  cursor: pointer;
+
+  transition: color 0.2s ease;
+}
+
+.correction-link:hover {
+  color: #1d4ed8;
+  text-decoration: underline;
+}
+
+/* 원래 입력어 */
+.correction-original {
+  color: #888;
+  font-size: 12px;
+}
+
+/*
+ * --------------------------------------
+ * ✅ 급상승 검색어 (토글형) 스타일 추가
+ * --------------------------------------
+ */
+
+.toggle-button {
+  background: none;
+  border: none;
+  font-size: 16px;
+  cursor: pointer;
+  color: #555;
+  padding: 2px;
+  transition: transform 0.2s;
+}
+
+.trending-toggle-content {
+  max-height: 0;
+  transition: max-height 0.3s ease-out, padding 0.3s ease-out;
+  overflow: hidden;
+  padding: 0 15px; 
+}
+
+.trending-toggle-content.open {
+  max-height: 500px; 
+  padding: 10px 15px; 
+  transition: max-height 0.4s ease-in, padding 0.4s ease-in;
+}
+
+.keyword-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  grid-template-columns: 1fr; /* 2열로 나누기 */
+  gap: 8px; 
+}
+
+.keyword-item {
+  display: flex;
+  align-items: center;
+  gap: 6px;              /* ⭐ 핵심 */
+  cursor: pointer;
+  padding: 4px 0;
+}
+
+.keyword-item:hover {
+  background-color: #f6f8ff; 
+  border-radius: 4px;
+}
+
+.keyword-rank {
+  font-size: 12px;
+  font-weight: 700;
+  color: #1e40af;
+  width: 32px;           /* ⭐ 20px → 32px */
+  text-align: right;     /* 숫자 정렬 예쁘게 */
+  flex-shrink: 0;
+}
+
+.keyword-text {
+  font-size: 14px;
+  color: #111;           /* 검정 확실하게 */
+  font-weight: 500;
+  flex-grow: 1;
+
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+
+/* 토글 닫혔을 때의 버튼 위치 조정 */
+.trending-rolling-header .toggle-button {
+    margin-left: 5px;
+    padding: 0;
+}
+
+/* 제목과 날짜를 감싸는 컨테이너 */
+.ranking-header-with-date {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    
+    /* 기존 sidebar-title에서 가지고 있던 여백과 구분선 */
+    padding: 5px 8px 10px;
+    border-bottom: 1px solid #f0f0f0;
+    margin-bottom: 10px;
+}
+
+/* 업데이트 시간 텍스트 */
+.update-datetime {
+    font-size: 12px;
+    color: #6b7280; /* 연한 회색 */
+    font-weight: 500;
+    white-space: nowrap;
+}
+
+/* 기존 .sidebar-title 스타일을 재정의하여 적용 */
+.sidebar-section .sidebar-title {
+    padding: 0;
+    border-bottom: none;
+    margin-bottom: 0;
+}
+
+/* 🚀 거래대금 토글 전용 스타일 (추가) */
+.ranking-toggle-content {
+  /* 닫힌 상태: max-height를 0으로 설정하여 숨김 */
+  max-height: 0;
+  transition: max-height 0.3s ease-out, padding 0.3s ease-out;
+  overflow: hidden;
+  padding: 0 15px; /* 헤더와 동일하게 여백 설정 */
+}
+
+.ranking-toggle-content.open {
+  /* 열린 상태: 충분히 큰 값으로 설정하여 콘텐츠 표시 */
+  max-height: 500px; 
+  padding: 10px 15px; /* 내용 표시를 위한 패딩 설정 */
+  transition: max-height 0.4s ease-in, padding 0.4s ease-in;
+}
+
+/* 거래대금 헤더 디자인 통일 */
+.ranking-toggle-box .ranking-toggle-header {
+    cursor: pointer; /* 클릭 가능한 영역임을 명시 */
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 15px; /* 헤더 여백 */
+    border-bottom: 1px solid #f0f0f0;
+}
+
+.ranking-toggle-box .ranking-toggle-header:hover {
+    background-color: #f6f8ff; /* 호버 효과 추가 */
+}
+
+.ranking-toggle-box .toggle-title {
+    /* 기존 sidebar-title과 유사하게 디자인 */
+    font-size: 16px;
+    font-weight: 700;
+    color: #1e40af;
+    margin: 0;
+}
+
+.translate-btn {
+  padding: 5px 8px;
+  border-radius: 8px;
+  border: 1px solid #c7d2fe;
+  background: #eef2ff;
+  color: #1e40af;
+  cursor: pointer;
+  font-size: 13px;
+
+  /* 🔴 핵심 */
+  white-space: nowrap;     /* 줄바꿈 방지 */
+  display: inline-flex;    /* 내부 정렬 안정화 */
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;          /* flex 안에서 찌그러지지 않게 */
+  min-width: 96px;         /* 버튼 가로 최소값 (원하면 조절) */
+}
+
+.translate-btn:hover {
+  background: #e0e7ff;
+}
+
+.translate-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}

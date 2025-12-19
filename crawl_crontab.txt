@@ -1,0 +1,5 @@
+# 9:00~14:50, 10분 단위
+0,10,20,30,40,50 9-14 * * 1-5 /home/kanasieltg/stock_crawler/venv/bin/python /home/kanasieltg/stock_crawler/crawl_naver_krx.py >> /home/kanasieltg/stock_crawler/crawl.log 2>&1
+
+# 15:00~15:30, 10분 단위
+0,10,20,30 15 * * 1-5 /home/kanasieltg/stock_crawler/venv/bin/python /home/kanasieltg/stock_crawler/crawl_naver_krx.py >> /home/kanasieltg/stock_crawler/crawl.log 2>&1

@@ -1,0 +1,25 @@
+/* src/App.css - 완전 최종 버전 */
+/* 오른쪽 흰색 여백 100% 제거 + 메인페이지는 가운데, 다른 페이지는 꽉 차게 */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* 화면 전체 꽉 차게 (흰색 여백 완전 제거) */
+html, body, #root, .app-wrapper {
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden; /* 가로 스크롤 방지 */
+}
+
+/* 반응형 보정 (모바일에서 더 깔끔하게) */
+@media (max-width: 768px) {
+    .app-content.main-page,
+    .app-content:not(.main-page) {
+        padding: 90px 16px 110px;
+    }
+}

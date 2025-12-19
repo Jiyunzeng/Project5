@@ -1,0 +1,527 @@
+/* src/pages/Stock/KrxList.css - 최종 수정 버전 (AI 추천 스타일 통합) */
+
+.krx-page-wrapper {
+    max-width: 1400px;
+    width: 95%;
+    margin: 0 auto;
+    min-height: 100vh;
+    background: #ffffff;
+    padding: 16px 0;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 20px;
+}
+
+.krx-main-content {
+    max-width: 1000px;
+    width: 100%;
+    padding: 0 20px;
+    margin: 0;
+}
+
+@media (max-width: 1400px) {
+    .krx-page-wrapper {
+        width: 100%;
+        max-width: none;
+        flex-direction: column;
+        align-items: center;
+    }
+    .krx-main-content {
+        max-width: 100%;
+        padding: 0 16px;
+    }
+    .krx-sidebar-wrapper {
+        width: 90%;
+        max-width: 900px;
+        margin: 20px 0;
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 16px;
+    }
+    .krx-ranking-sidebar {
+        width: 100%;
+        max-width: 368px;
+        margin: 0;
+        padding: 16px;
+        max-height: 400px;
+    }
+    .krx-sidebar-section {
+        width: 100%;
+        max-width: 368px;
+    }
+}
+
+/* --------------------------------------------------- */
+/* 🌟 시세 로딩 화면 중앙 정렬 스타일 */
+/* --------------------------------------------------- */
+
+.krx-loading-wrapper {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: rgba(255, 255, 255, 0.9);
+    z-index: 9999;
+}
+
+.krx-loading-text {
+    margin-top: 16px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #1e40af;
+}
+
+/* --- 기존 스타일 유지 --- */
+
+.krx-page-title {
+    text-align: center;
+    font-size: 1.85rem;
+    font-weight: 800;
+    color: #1e40af;
+    margin-bottom: 1.5rem;
+    letter-spacing: -0.8px;
+}
+
+.krx-crawled-time {
+    text-align: center;
+    color: #64748b;
+    font-size: 0.92rem;
+    margin-bottom: 1.5rem;
+    font-weight: 500;
+}
+
+/* 검색창 */
+.krx-search-wrapper {
+    max-width: 580px;
+    margin: 0 auto 2.2rem;
+}
+
+.krx-search-input .MuiOutlinedInput-root {
+    border-radius: 16px;
+    height: 52px;
+    font-size: 1rem;
+    background: white;
+}
+
+.krx-search-result {
+    text-align: center;
+    margin-top: 12px;
+    color: #475569;
+    font-size: 0.88rem;
+    font-weight: 500;
+}
+
+/* --------------------------------------------------- */
+/* 🌟 AI 제안 메시지 및 리스트 UI (추가/수정됨) 🌟 */
+/* --------------------------------------------------- */
+
+.krx-ai-suggestion-wrapper {
+    padding: 16px;
+    margin: 16px auto;
+    border-radius: 12px;
+    background-color: #f8faff; /* 매우 밝은 파랑 배경 */
+    border: 1.5px solid #dbeafe; /* 연한 파랑 경계선 */
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    max-width: 1000px;
+}
+
+.krx-ai-suggestion-header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 8px;
+}
+
+.krx-ai-suggestion-header .MuiSvgIcon-root {
+    color: #1e40af; /* 아이콘 색상을 테마 색상으로 통일 */
+    margin-right: 8px;
+}
+
+.krx-ai-suggestion-message {
+    font-weight: 600;
+    color: #1e40af; /* 메시지 텍스트를 테마 색상으로 강조 */
+    font-size: 0.95rem;
+}
+
+/* 추론 단어 Chip 스타일 */
+.krx-inferred-word-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 10px;
+}
+
+.krx-inferred-word-label {
+    color: #475569;
+    font-size: 0.85rem;
+    font-weight: 500;
+    white-space: nowrap;
+}
+
+.krx-inferred-word-chip {
+    /* 추론된 단어는 가장 확실한 제안이므로 강조된 스타일 적용 */
+    background-color: #fef3c7 !important; /* 연한 노랑/경고색 */
+    color: #b45309 !important; /* 진한 주황색 텍스트 */
+    border: 1px solid #fcd34d !important;
+    font-weight: 700 !important;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.krx-inferred-word-chip:hover {
+    background-color: #fde68a !important;
+}
+
+/* 유사 종목 리스트 Chip 스타일 */
+.krx-suggestion-list-wrapper {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 16px;
+    padding-top: 10px;
+    border-top: 1px dashed #bfdbfe; /* 연한 파랑 점선으로 구분 */
+}
+
+.krx-suggestion-list-label {
+    color: #475569;
+    font-size: 0.85rem;
+    font-weight: 500;
+    min-width: 40px;
+    white-space: nowrap;
+}
+
+.krx-suggestion-chip {
+    /* 유사 종목은 아웃라인 스타일로 구분 */
+    background-color: transparent !important;
+    color: #2563eb !important; /* 테마 파랑색 */
+    border: 1px solid #93c5fd !important;
+    font-weight: 600 !important;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.krx-suggestion-chip:hover {
+    background-color: #eff6ff !important;
+    border-color: #2563eb !important;
+    box-shadow: 0 2px 4px rgba(37, 99, 235, 0.1);
+}
+
+/* --------------------------------------------------- */
+
+
+/* 탭 */
+.krx-tabs .MuiTabs-indicator {
+    background-color: #1e40af;
+    height: 4px;
+    border-radius: 2px;
+}
+
+.krx-page-info {
+    text-align: center;
+    color: #64748b;
+    font-size: 0.92rem;
+    margin: 2rem 0 1.5rem;
+    font-weight: 600;
+}
+
+/* 테이블 */
+.krx-table-container {
+    max-height: 1000px; /* 최대 높이 설정 */
+    border-radius: 18px;
+    overflow-y: auto;
+    overflow-x: hidden;
+    box-shadow: 0 12px 40px rgba(0,0,0,0.1);
+    border: 1.8px solid #e2e8f0;
+}
+
+.krx-table-head {
+    background: linear-gradient(135deg, #1e40af, #2563eb);
+}
+
+.krx-table-head .MuiTableCell-root {
+    color: black !important;
+    font-weight: 700;
+    white-space: nowrap;
+}
+
+
+.krx-table-row:hover {
+    background: #f8fafc !important;
+}
+
+.krx-table-container .MuiTableCell-root {
+    font-size: 0.8rem !important;
+    padding: 10px 6px !important;
+    border-bottom: 1px solid #f1f5f9;
+}
+
+.krx-name-cell { cursor: pointer; }
+
+.krx-stock-name {
+    font-weight: 700;
+    font-size: 0.94rem;
+    color: #0f172a;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 120px;
+}
+
+.krx-stock-code {
+    font-size: 0.76rem;
+    color: #64748b;
+    margin-top: 3px;
+}
+
+.krx-rank-top {
+    background: linear-gradient(45deg, #f59e0b, #f97316) !important;
+    color: white !important;
+    font-weight: bold !important;
+    font-size: 0.7rem !important;
+    height: 26px;
+    min-width: 30px;
+}
+
+.krx-rank-normal {
+    background: #f8fafc !important;
+    color: #1e293b !important;
+    border: 1px solid #cbd5e1;
+    font-weight: bold !important;
+    font-size: 0.7rem !important;
+    height: 26px;
+}
+
+/* --------------------------------------------------- */
+/* 🌟 전일비/등락률 색상 규칙 🌟 */
+/* --------------------------------------------------- */
+
+/* 1. 상승/양수 (빨강) */
+.krx-up {
+    color: #dc2626 !important; /* 상승/양수: 빨강 */
+    font-weight: 600;
+}
+
+/* 2. 상한가 (더 진한 빨강) */
+.krx-up-limit {
+    color: #b91c1c !important; /* 상한가: 더 진한 빨강 */
+    font-weight: 700;
+}
+
+/* 3. 하락/음수 (파랑) */
+.krx-down {
+    color: #2563eb !important; /* 하락/음수: 파랑 */
+    font-weight: 600;
+}
+
+/* 4. 하한가 (더 진한 파랑) */
+.krx-down-limit {
+    color: #1e3a8a !important; /* 하한가: 더 진한 파랑 */
+    font-weight: 700;
+}
+
+/* 5. 0% 또는 보합 (검정) */
+.krx-zero {
+    color: #0f172a !important; /* 0%/보합: 검정 */
+    font-weight: 600;
+}
+
+/* --------------------------------------------------- */
+
+.krx-star-filled { color: #f59e0b !important; }
+.krx-star-empty { color: #94a3b8 !important; }
+
+.krx-pagination-wrapper {
+    display: flex;
+    justify-content: center;
+    margin: 3rem 0 1rem;
+}
+
+/* 🌟 통합 사이드바 래퍼 */
+.krx-sidebar-wrapper {
+    min-width: 280px;
+    max-width: 300px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    padding-top: 10px;
+}
+
+/* 🌟 랭킹 사이드바 높이 제한 및 스크롤 적용 */
+.krx-ranking-sidebar {
+    position: relative;
+    width: 100%;
+    max-height: 500px;
+    overflow-y: auto;
+    background: white;
+    border-radius: 19px;
+    box-shadow: 0 12.8px 38.4px rgba(0,0,0,0.16);
+    border: 1.6px solid #e2e8f0;
+    z-index: 10;
+    padding: 8px 12.8px;
+}
+
+.krx-ranking-title {
+    font-size: 0.96rem;
+    font-weight: 900;
+    color: #dc2626;
+    text-align: center;
+    margin-bottom: 14.4px;
+    background: linear-gradient(90deg, #dc2626, #ef4444);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    padding: 8px 0;
+}
+
+.krx-ranking-item {
+    padding: 8px 9.6px;
+    border-radius: 14.4px;
+    background: white;
+    border: 1.44px solid #f1f5f9;
+    margin-bottom: 9.6px;
+    cursor: pointer;
+    transition: all 0.35s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.krx-ranking-item::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 5.6px;
+    height: 100%;
+    background: linear-gradient(180deg, #dc2626, #f87171);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.krx-ranking-item:hover {
+    transform: translateX(11.2px) translateY(-2.4px);
+    box-shadow: 0 11.2px 28.8px rgba(220, 38, 38, 0.24);
+    border-color: #fca5a5;
+    background: #fffbfb;
+}
+
+.krx-ranking-item:hover::before {
+    opacity: 1;
+}
+
+.krx-ranking-item-inner {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 11.2px;
+}
+
+.krx-ranking-left {
+    display: flex;
+    align-items: center;
+    gap: 12.8px;
+    flex: 1;
+    min-width: 0;
+}
+
+.krx-ranking-rank {
+    font-size: 1.08rem;
+    font-weight: 900;
+    color: #dc2626;
+    min-width: 20px;
+    text-align: center;
+    text-shadow: 0 1.6px 4.8px rgba(220,38,38,0.2);
+}
+
+.krx-ranking-item:nth-child(1) .krx-ranking-rank { color: #f59e0b; font-size: 1.16rem; }
+.krx-ranking-item:nth-child(2) .krx-ranking-rank { color: #f97316; }
+.krx-ranking-item:nth-child(3) .krx-ranking-rank { color: #ef4444; }
+
+.krx-ranking-name {
+    font-weight: 700;
+    font-size: 0.8rem;
+    color: #1e293b;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 96px;
+}
+
+.krx-ranking-code {
+    font-size: 0.608rem;
+    color: #94a3b8;
+    margin-top: 2.4px;
+    font-weight: 500;
+}
+
+/* 🌟 스크롤바 커스터마이징 (랭킹 사이드바) */
+.krx-ranking-sidebar::-webkit-scrollbar { width: 8px; }
+.krx-ranking-sidebar::-webkit-scrollbar-thumb { background: #fca5a5; border-radius: 8px; }
+.krx-ranking-sidebar::-webkit-scrollbar-track { background: #f1f5f9; border-radius: 8px; }
+
+
+/* 최근 본 종목/즐겨찾기 공통 스타일 */
+.krx-sidebar-section {
+    background: white;
+    border-radius: 18px;
+    padding: 16px;
+    border: 1.6px solid #e2e8f0;
+    box-shadow: 0 6px 20px rgba(0,0,0,0.05);
+}
+
+.krx-sidebar-title {
+    font-size: 1.1rem;
+    font-weight: 800;
+    color: #1e40af;
+    margin-bottom: 12px;
+}
+
+/* 최근 본 종목 아이템 */
+.krx-recent-item {
+    display: flex;
+    justify-content: space-between;
+    padding: 6px 4px;
+    cursor: pointer;
+    border-radius: 4px;
+    transition: background-color 0.2s;
+}
+
+.krx-recent-item:hover {
+    background-color: #f8fafc;
+}
+
+.krx-recent-name {
+    font-weight: 600;
+    color: #0f172a;
+}
+
+.krx-recent-code {
+    color: #64748b;
+    font-size: 0.8rem;
+}
+
+/* 즐겨찾기 아이템 */
+.krx-favorite-list-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 6px 4px;
+}
+
+.krx-favorite-link {
+    cursor: pointer;
+    flex-grow: 1;
+    transition: color 0.2s;
+}
+
+.krx-favorite-link:hover {
+    text-decoration: underline;
+    color: #2563eb;
+}
