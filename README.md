@@ -1,9 +1,15 @@
-# StockNews 🚀
+# StockNews 
 
 ![개발 기간](https://img.shields.io/badge/개발%20기간-2025.12.02%20~%202025.12.16-blue?style=flat-square)
 ![팀원 수](https://img.shields.io/badge/팀원-6명-green?style=flat-square)
 
+> 실시간 주식 시세와 뉴스 데이터를 수집·분석하여  
+> TF-IDF 기반 검색과 인기 검색어를 제공하는 데이터 중심 웹 서비스
+
+**Keywords**: React · Spring Boot · FastAPI · MongoDB · Redis · TF-IDF
+
 <img src="https://github.com/user-attachments/assets/1231967b-c1d3-4f0e-8ad4-81def337bf63" alt="프로젝트 메인 대시보드 스크린샷" />
+
 
 ## 프로젝트 소개
 
