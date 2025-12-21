@@ -103,7 +103,7 @@ scores = cosine_similarity(query_vec, doc_vecs)[0]
     * **근접도(Proximity)**: 여러 키워드가 본문 내에서 서로 가까운 위치에 등장할 경우 가산점 반영.
 
 <details>
-<summary><strong>▼ 점수 보정 가중치 로직 보기</strong></summary>
+<summary><strong> 점수 보정 가중치 로직 보기</strong></summary>
 
 ```python
 # 1. 제목 위치 기반 가중치 강화
@@ -128,7 +128,7 @@ if len(positions) >= 2:
 
 기술 스택: Spring Boot와 MongoDB를 연동하여 비정형 로그 데이터를 효율적으로 적재.
 
-<details> <summary><strong>▼ 검색 로그 저장 로직 (Java) 보기</strong></summary>
+<details> <summary><strong> 검색 로그 저장 로직 (Java) 보기</strong></summary>
 
 Java
 
@@ -152,7 +152,7 @@ public List<Map<String, Object>> searchWithTfidf(@RequestParam("q") String query
 
 성과: 사용자가 현재 시장의 주요 이슈를 직관적으로 파악할 수 있도록 검색 탐색 효율 증대.
 
-<details> <summary><strong>▼ 인기 검색어 집계 코드 (Java/MongoDB) 보기</strong></summary>
+<details> <summary><strong> 인기 검색어 집계 코드 (Java/MongoDB) 보기</strong></summary>
 
 Java
 
@@ -180,7 +180,7 @@ public List<Map<String, Object>> getTrendingKeywords(int hours) {
 
 UI/UX: 검색 입력 흐름을 방해하지 않는 드롭다운 방식 설계로 사용자 편의성 극대화.
 
-<details> <summary><strong>▼ 자동완성 검색 로직 (Java/MongoDB) 보기</strong></summary>
+<details> <summary><strong> 자동완성 검색 로직 (Java/MongoDB) 보기</strong></summary>
 
 Java
 
