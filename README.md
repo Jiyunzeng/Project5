@@ -7,21 +7,19 @@
 
 <img src="https://github.com/user-attachments/assets/1231967b-c1d3-4f0e-8ad4-81def337bf63" alt="프로젝트 메인 대시보드 스크린샷" />
 
-
----
-
+## 프로젝트 소개
 ### 📌 프로젝트 개요
-StockNews는 실시간 주식 시세와 뉴스 데이터를 수집·분석하여,  
-형태소 분석과 TF-IDF 기반 검색 기능을 제공하는 데이터 기반 웹 서비스 프로젝트입니다.
+StockNews는 **실시간 주식 시세와 뉴스 데이터**를 수집·분석하여,  
+**형태소 분석과 TF-IDF 기반 검색 기능**을 제공하는 데이터 기반 웹 서비스 프로젝트입니다.
 
 주식 시세와 뉴스 정보를 함께 확인하기 어려운 환경을 개선하여,  
 사용자는 종목 및 키워드를 기준으로 관련 뉴스와 시장 흐름을 한 화면에서 효율적으로 탐색할 수 있습니다.
-
 
 ### 📅 개발 기간
 2025.12.02 ~ 2025.12.16
 
 ### 👥 팀원 및 역할
+
 | 이름   | 역할                          | GitHub                                                                 |
 |--------|-------------------------------|------------------------------------------------------------------------|
 | 정태규 | [팀장] 국내주식 크롤링, 실시간 대시보드 등            | [![GitHub](https://img.shields.io/badge/GitHub-000000?style=flat&logo=github&logoColor=white)](https://github.com/KANASIEL) |
@@ -32,6 +30,7 @@ StockNews는 실시간 주식 시세와 뉴스 데이터를 수집·분석하여
 | 지윤정 | 검색엔진 (형태소 분석 TF-IDF랭킹 오타보정), 인기검색어 등 | [![GitHub](https://img.shields.io/badge/GitHub-000000?style=flat&logo=github&logoColor=white)](https://github.com/Jiyunzeng) |
 
 ## 🛠️ 기술 스택
+
 | 카테고리             | 기술                                                                                                                                 |
 |----------------------|--------------------------------------------------------------------------------------------------------------------------------------|
 | 운영체제             | ![Ubuntu](https://img.shields.io/badge/Ubuntu-E95420?style=flat&logo=ubuntu&logoColor=white)&nbsp;![Windows 11](https://img.shields.io/badge/Windows%2011-0078D6?style=flat&logo=windows11&logoColor=white) |
@@ -45,3 +44,4 @@ StockNews는 실시간 주식 시세와 뉴스 데이터를 수집·분석하여
 | 배포 / 호스팅        | ![Render](https://img.shields.io/badge/Render-46E3B7?style=flat&logo=render&logoColor=black)                                          |
 | 개발 도구 / IDE      | ![IntelliJ IDEA](https://img.shields.io/badge/IntelliJ%20IDEA-000000?style=flat&logo=intellijidea&logoColor=white)&nbsp;![STS](https://img.shields.io/badge/Spring%20Tool%20Suite-6DB33F?style=flat&logo=spring&logoColor=white)&nbsp;![VS Code](https://img.shields.io/badge/VS%20Code-007ACC?style=flat&logo=visualstudiocode&logoColor=white) |
 | 형상 관리 / 협업     | ![GitHub](https://img.shields.io/badge/GitHub-181717?style=flat&logo=github&logoColor=white)&nbsp;![Notion](https://img.shields.io/badge/Notion-000000?style=flat&logo=notion&logoColor=white) |
+
