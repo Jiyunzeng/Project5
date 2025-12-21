@@ -69,11 +69,13 @@ StockNews는 **실시간 주식 시세와 뉴스 데이터**를 수집·분석�
 
 ## 🔍 핵심 로직 및 구현 상세
 
+## 🔍 핵심 로직 및 구현 상세
+
 ### 1. TF-IDF 기반 뉴스 검색 랭킹 구현
 기존의 키워드 포함 여부 중심 검색 방식은 연관도가 낮다는 한계가 있었습니다. 이를 해결하기 위해 **TF-IDF 가중치와 코사인 유사도(Cosine Similarity)**를 활용한 랭킹 시스템을 구축했습니다.
 
-* **동작 흐름**: 카테고리별 후보 데이터 선조회 → 제목 및 본문 기반 TF-IDF 벡터화 → 유사도 점수 산출 및 정렬
-* **성과**: 단순 키워드 일치가 아닌, 문맥적 연관성이 높은 뉴스를 상위에 노출하여 검색 정확도를 개선했습니다.
+- **동작 흐름**: 카테고리별 후보 데이터 선조회 → 제목 및 본문 기반 TF-IDF 벡터화 → 유사도 점수 산출 및 정렬  
+- **성과**: 단순 키워드 일치가 아닌, 문맥적 연관성이 높은 뉴스를 상위에 노출하여 검색 정확도를 개선했습니다.
 
 <details>
 <summary><strong>🔍 핵심 코드 보기</strong></summary>
@@ -82,48 +84,45 @@ StockNews는 **실시간 주식 시세와 뉴스 데이터**를 수집·분석�
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
 
-# TfidfVectorizer를 활용한 뉴스 벡터화 및 유사도 계산
-# max_features: 메모리 효율을 위해 주요 단어 1000개 추출
-vectorizer = TfidfVectorizer(max_features=1000, lowercase=False, token_pattern=r"\S+")
+vectorizer = TfidfVectorizer(
+    max_features=1000,
+    lowercase=False,
+    token_pattern=r"\S+"
+)
 tfidf_matrix = vectorizer.fit_transform([query_tokens_str] + doc_tokens)
 
-query_vec = tfidf_matrix[0:1] # 사용자 검색어 벡터
-doc_vecs = tfidf_matrix[1:]  # 뉴스 문서들 벡터
+query_vec = tfidf_matrix[0:1]
+doc_vecs = tfidf_matrix[1:]
 
-# 코사인 유사도를 통한 검색 연관도 점수 산출
 scores = cosine_similarity(query_vec, doc_vecs)[0]
-</details>'''
-
+</details>
 2. 검색 정확도 향상을 위한 점수 보정 로직 (Heuristic Scoring)
-통계적 유사도(TF-IDF) 점수만으로는 실제 사용자가 느끼는 '중요도'를 완벽히 반영하기 어렵습니다. 이를 보완하기 위해 뉴스 도메인에 특화된 가중치 시스템을 직접 설계했습니다.
+통계적 유사도(TF-IDF) 점수만으로는 실제 사용자가 느끼는 ‘중요도’를 완벽히 반영하기 어렵습니다. 이를 보완하기 위해 뉴스 도메인에 특화된 가중치 시스템을 설계했습니다.
 
-보정 기준:
+제목 가중치: 검색어가 뉴스 제목에 포함된 경우 가점 부여
 
-제목 가중치: 검색어가 뉴스 제목에 포함된 경우 가점 부여.
+위치 가중치: 뉴스 본문의 앞부분(상단)에 키워드가 등장할수록 높은 점수 할당
 
-위치 가중치: 뉴스 본문의 앞부분(상단)에 키워드가 등장할수록 높은 점수 할당.
+근접도(Proximity): 여러 키워드가 본문 내에서 가까운 위치에 등장할 경우 가산점 반영
 
-근접도(Proximity): 여러 키워드가 본문 내에서 서로 가까운 위치에 등장할 경우 가산점 반영.
+임계값 필터링: 일정 점수 이하 결과 제거로 노이즈 감소
 
 <details> <summary><strong>⚖️ 점수 보정 가중치 로직 보기</strong></summary>
-
-Python
-
-# 1. 제목 위치 기반 가중치 강화
+python
+코드 복사
+# 1) 제목 위치 기반 가중치 강화
 pos_title = title_lower.find(q_lower)
 if pos_title != -1:
     title_pos_score = max(0.05, 0.20 * (1 - pos_title / max(len(title_lower), 1)))
     score += title_pos_score
 
-# 2. 본문 내 키워드 근접도(Proximity) 점수 계산
+# 2) 본문 키워드 근접도(Proximity) 점수
 if len(positions) >= 2:
     positions.sort()
     min_gap = min(positions[i+1] - positions[i] for i in range(len(positions)-1))
-    # 키워드 간 거리가 80자 이내일 경우 밀접도가 높다고 판단
     proximity_score = max(0.0, 0.15 * (1 - min_gap / 80))
     score += proximity_score
-</details>'''
-
+</details>
 3. 데이터 자산화를 위한 검색 로그 저장 구조
 검색 요청이 발생할 때마다 사용자의 검색 행태를 분석하기 위해 검색어와 검색 시점을 로그로 기록하는 파이프라인을 구축했습니다.
 
