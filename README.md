@@ -7,8 +7,6 @@
 
 <img src="https://github.com/user-attachments/assets/1231967b-c1d3-4f0e-8ad4-81def337bf63" alt="프로젝트 메인 대시보드 스크린샷" />
 
-## 프로젝트 소개
-
 
 ---
 
