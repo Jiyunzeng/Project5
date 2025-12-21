@@ -7,18 +7,17 @@
 
 <img src="https://github.com/user-attachments/assets/1231967b-c1d3-4f0e-8ad4-81def337bf63" alt="프로젝트 메인 대시보드 스크린샷" />
 
-## 프로젝트 소개
-### 📌 프로젝트 개요
+## 📌 프로젝트 개요
 StockNews는 **실시간 주식 시세와 뉴스 데이터**를 수집·분석하여,  
 **형태소 분석과 TF-IDF 기반 검색 기능**을 제공하는 데이터 기반 웹 서비스 프로젝트입니다.
 
 주식 시세와 뉴스 정보를 함께 확인하기 어려운 환경을 개선하여,  
 사용자는 종목 및 키워드를 기준으로 관련 뉴스와 시장 흐름을 한 화면에서 효율적으로 탐색할 수 있습니다.
 
-### 📅 개발 기간
+## 📅 개발 기간
 2025.12.02 ~ 2025.12.16
 
-### 👥 팀원 및 역할
+## 👥 팀원 및 역할
 
 | 이름   | 역할                          | GitHub                                                                 |
 |--------|-------------------------------|------------------------------------------------------------------------|
@@ -28,6 +27,16 @@ StockNews는 **실시간 주식 시세와 뉴스 데이터**를 수집·분석�
 | 구현서 | 로그인/회원가입, 다국어UI 등                         | [![GitHub](https://img.shields.io/badge/GitHub-000000?style=flat&logo=github&logoColor=white)](https://github.com/guhyeonseo) |
 | 손원주 | 검색엔진 (형태소 분석 TF-IDF랭킹 오타보정), AI요약 등 | [![GitHub](https://img.shields.io/badge/GitHub-000000?style=flat&logo=github&logoColor=white)](https://github.com/swj6498) |
 | **지윤정** | 검색엔진 (형태소 분석 TF-IDF랭킹 오타보정), 인기검색어 등 | [![GitHub](https://img.shields.io/badge/GitHub-000000?style=flat&logo=github&logoColor=white)](https://github.com/Jiyunzeng) |
+
+### 👨‍💻 담당 역할
+
+| 역할/영역 | 담당 내용 |
+|---|---|
+| 🔍 검색 기능 | 뉴스 검색 기능 설계 및 구현 |
+| 📊 검색 랭킹 | TF-IDF 가중치 기반 검색 결과 랭킹 로직 구현 |
+| 🗂 검색 로그 | 사용자 검색 로그 저장 및 관리 구조 구현 |
+| 📈 인기 검색어 | 검색 로그 기반 인기 검색어 기능 구현 |
+| ⌨ 자동완성	 | 자동완성 검색어 기능 구현 |
 
 ## 🛠️ 기술 스택
 
