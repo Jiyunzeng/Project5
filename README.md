@@ -12,9 +12,6 @@
 
 ## 프로젝트 소개
 ### 📌 프로젝트 개요
-
----
-
 StockNews는 실시간 주식 시세와 뉴스 데이터를 수집·분석하여,  
 형태소 분석과 TF-IDF 기반 검색 기능을 제공하는 데이터 기반 웹 서비스 프로젝트입니다.
 
@@ -23,14 +20,9 @@ StockNews는 실시간 주식 시세와 뉴스 데이터를 수집·분석하여
 
 
 ### 📅 개발 기간
-
----
-
 2025.12.02 ~ 2025.12.16
 
 ### 👥 팀원 및 역할
-
-
 | 이름   | 역할                          | GitHub                                                                 |
 |--------|-------------------------------|------------------------------------------------------------------------|
 | 정태규 | [팀장] 국내주식 크롤링, 실시간 대시보드 등            | [![GitHub](https://img.shields.io/badge/GitHub-000000?style=flat&logo=github&logoColor=white)](https://github.com/KANASIEL) |
@@ -41,9 +33,6 @@ StockNews는 실시간 주식 시세와 뉴스 데이터를 수집·분석하여
 | 지윤정 | 검색엔진 (형태소 분석 TF-IDF랭킹 오타보정), 인기검색어 등 | [![GitHub](https://img.shields.io/badge/GitHub-000000?style=flat&logo=github&logoColor=white)](https://github.com/Jiyunzeng) |
 
 ## 🛠️ 기술 스택
-
----
-
 | 카테고리             | 기술                                                                                                                                 |
 |----------------------|--------------------------------------------------------------------------------------------------------------------------------------|
 | 운영체제             | ![Ubuntu](https://img.shields.io/badge/Ubuntu-E95420?style=flat&logo=ubuntu&logoColor=white)&nbsp;![Windows 11](https://img.shields.io/badge/Windows%2011-0078D6?style=flat&logo=windows11&logoColor=white) |
