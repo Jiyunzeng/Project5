@@ -108,7 +108,7 @@ scores = ;
 임계값 필터링: 일정 점수 이하 결과 제거로 노이즈 감소
 
 <details> <summary><strong>⚖️ 점수 보정 가중치 로직 보기</strong></summary>
-```python
+python
 코드 복사
 # 1) 제목 위치 기반 가중치 강화
 pos_title = title_lower.find(q_lower)
@@ -122,7 +122,7 @@ if len(positions) >= 2:
     min_gap = min(positions[i+1] - positions[i] for i in range(len(positions)-1))
     proximity_score = max(0.0, 0.15 * (1 - min_gap / 80))
     score += proximity_score
-```
+'''
 </details>
 
 
@@ -148,7 +148,7 @@ public List<Map<String, Object>> searchWithTfidf(@RequestParam("q") String query
     
     return newsService.searchWithTfidfRanking(query, category);
 }
-```
+'''
 </details>
 
 
@@ -178,7 +178,7 @@ public List<Map<String, Object>> getTrendingKeywords(int hours) {
 
     return mongoTemplate.aggregate(agg, "search_log", Map.class).getMappedResults();
 }
-```
+'''
 </details>
 
 ### 5. 실시간 자동완성 검색어 구현
