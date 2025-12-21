@@ -3,7 +3,7 @@
 ![개발 기간](https://img.shields.io/badge/개발%20기간-2025.12.02%20~%202025.12.16-blue?style=flat-square)
 ![팀원 수](https://img.shields.io/badge/팀원-6명-green?style=flat-square)
 
-> 실시간 주식 시세와 뉴스 데이터를 수집·분석하여 형태소분석과 TF-IDF 기반 검색을 제공하는 데이터 기반 웹 서비스
+> 실시간 주식 시세와 뉴스 데이터를 수집·분석하여 형태소 분석과 TF-IDF 기반 검색을 제공하는 데이터 기반 웹 서비스
 
 <img src="https://github.com/user-attachments/assets/1231967b-c1d3-4f0e-8ad4-81def337bf63" alt="프로젝트 메인 대시보드 스크린샷" />
 
@@ -30,6 +30,17 @@ StockNews는 **실시간 주식 시세와 뉴스 데이터**를 수집·분석�
 | 손원주 | 검색엔진 (형태소 분석 TF-IDF랭킹 오타보정), AI요약 등 | [![GitHub](https://img.shields.io/badge/GitHub-000000?style=flat&logo=github&logoColor=white)](https://github.com/swj6498) |
 | **지윤정** | 검색엔진 (형태소 분석 TF-IDF랭킹 오타보정), 인기검색어 등 | [![GitHub](https://img.shields.io/badge/GitHub-000000?style=flat&logo=github&logoColor=white)](https://github.com/Jiyunzeng) |
 
+## ✨ 핵심 기능
+
+- 실시간 국내 주식 시세 조회 (KOSPI / KOSDAQ)
+- 국내·해외 주식 뉴스 자동 수집 및 제공
+- 형태소 분석 기반 뉴스 검색
+- TF-IDF 가중치를 적용한 검색 결과 랭킹 제공
+- 검색 로그 기반 인기 검색어 제공
+- 자동완성 검색어 제공
+- AI 요약 제공
+- 다국어 지원
+
 ## 👨‍💻 담당 역할
 
 | 역할/영역 | 담당 내용 |
@@ -55,16 +66,4 @@ StockNews는 **실시간 주식 시세와 뉴스 데이터**를 수집·분석�
 | 배포 / 호스팅        | ![Render](https://img.shields.io/badge/Render-46E3B7?style=flat&logo=render&logoColor=black)                                          |
 | 개발 도구 / IDE      | ![IntelliJ IDEA](https://img.shields.io/badge/IntelliJ%20IDEA-000000?style=flat&logo=intellijidea&logoColor=white)&nbsp;![STS](https://img.shields.io/badge/Spring%20Tool%20Suite-6DB33F?style=flat&logo=spring&logoColor=white)&nbsp;![VS Code](https://img.shields.io/badge/VS%20Code-007ACC?style=flat&logo=visualstudiocode&logoColor=white) |
 | 형상 관리 / 협업     | ![GitHub](https://img.shields.io/badge/GitHub-181717?style=flat&logo=github&logoColor=white)&nbsp;![Notion](https://img.shields.io/badge/Notion-000000?style=flat&logo=notion&logoColor=white) |
-
-## ✨ 핵심 기능
-
-- 실시간 국내 주식 시세 조회 (KOSPI / KOSDAQ)
-- 국내·해외 주식 뉴스 자동 수집 및 제공
-- 형태소 분석 기반 뉴스 검색
-- TF-IDF 가중치를 적용한 검색 결과 랭킹 제공
-- 검색 로그 기반 인기 검색어 제공
-- 자동완성 검색어 제공
-- AI 요약 제공
-- 다국어 지원
-
 
