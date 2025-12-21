@@ -72,7 +72,8 @@ StockNews는 **실시간 주식 시세와 뉴스 데이터**를 수집·분석�
 ### 1. TF-IDF 기반 뉴스 검색 랭킹 구현
 기존의 키워드 포함 여부 중심 검색 방식은 연관도가 낮다는 한계가 있었습니다. 이를 해결하기 위해 TF-IDF 가중치와 코사인 유사도(Cosine Similarity)를 활용한 랭킹 시스템을 구축했습니다.
 
-**동작 흐름**: 카테고리별 후보 데이터 선조회 → 제목 및 본문 기반 TF-IDF 벡터화 → 유사도 점수 산출 및 정렬  
+**동작 흐름**: 검색 조건을 전달받아 뉴스 데이터를 조회한 뒤,
+제목 및 본문 텍스트를 기반으로 TF-IDF 벡터화 → 유사도 점수 산출 및 정렬
 **성과**: 단순 키워드 일치가 아닌, 문맥적 연관성이 높은 뉴스를 상위에 노출하여 검색 정확도를 개선했습니다.
 
 <details>
@@ -92,7 +93,7 @@ tfidf_matrix = vectorizer.fit_transform([query_tokens_str] + doc_tokens)
 query_vec = tfidf_matrix[0:1]
 doc_vecs = tfidf_matrix[1:]
 
-scores = ;
+scores = cosine_similarity(query_vec, doc_vecs)[0]
 ```
 </details>
 
