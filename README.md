@@ -75,24 +75,21 @@ StockNews는 **실시간 주식 시세와 뉴스 데이터**를 수집·분석�
 
 **성과**: 단순 키워드 일치가 아닌, 문맥적 연관성이 높은 뉴스를 상위에 노출하여 검색 정확도를 대폭 개선했습니다.
 
-🔍 핵심 로직 및 구현 상세
-1. TF-IDF 기반 뉴스 검색 랭킹 구현
-기존의 키워드 포함 여부 중심 검색 방식은 연관도가 낮다는 한계가 있었습니다. 이를 해결하기 위해 **TF-IDF 가중치와 코사인 유사도(Cosine Similarity)**를 활용한 랭킹 시스템을 구축했습니다.
-
-**동작흐름** : 카테고리별 후보 데이터 선조회 → 제목 및 본문 기반 TF-IDF 벡터화 → 유사도 점수 산출 및 정렬
-
-**성과**: 단순 키워드 일치가 아닌, 문맥적 연관성이 높은 뉴스를 상위에 노출하여 검색 정확도를 대폭 개선했습니다.
-
 <details>
-<summary>핵심 코드 (Python/Scikit-learn) 보기</summary>
+<summary><strong>▼ 핵심 코드 (Python/Scikit-learn) 보기</strong></summary>
+
 ```python
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
 
 # TfidfVectorizer를 활용한 뉴스 벡터화 및 유사도 계산
+# max_features: 메모리 효율을 위해 주요 단어 1000개 추출
 vectorizer = TfidfVectorizer(max_features=1000, lowercase=False, token_pattern=r"\S+")
 tfidf_matrix = vectorizer.fit_transform([query_tokens_str] + doc_tokens)
 
-query_vec = tfidf_matrix[0:1] # 검색어 벡터
-doc_vecs = tfidf_matrix[1:]   # 문서들 벡터
+query_vec = tfidf_matrix[0:1] # 사용자 검색어 벡터
+doc_vecs = tfidf_matrix[1:]  # 뉴스 문서들 벡터
+
+# 코사인 유사도를 통한 검색 연관도 점수 산출
 scores = cosine_similarity(query_vec, doc_vecs)[0]
+</details>
