@@ -7,6 +7,8 @@
 
 <img src="https://github.com/user-attachments/assets/1231967b-c1d3-4f0e-8ad4-81def337bf63" alt="프로젝트 메인 대시보드 스크린샷" />
 
+---
+
 ## 📌 프로젝트 개요
 StockNews는 **실시간 주식 시세와 뉴스 데이터**를 수집·분석하여,  
 **형태소 분석과 TF-IDF 기반 검색 기능**을 제공하는 데이터 기반 웹 서비스 프로젝트입니다.
@@ -28,7 +30,7 @@ StockNews는 **실시간 주식 시세와 뉴스 데이터**를 수집·분석�
 | 손원주 | 검색엔진 (형태소 분석 TF-IDF랭킹 오타보정), AI요약 등 | [![GitHub](https://img.shields.io/badge/GitHub-000000?style=flat&logo=github&logoColor=white)](https://github.com/swj6498) |
 | **지윤정** | 검색엔진 (형태소 분석 TF-IDF랭킹 오타보정), 인기검색어 등 | [![GitHub](https://img.shields.io/badge/GitHub-000000?style=flat&logo=github&logoColor=white)](https://github.com/Jiyunzeng) |
 
-### 👨‍💻 담당 역할
+## 👨‍💻 담당 역할
 
 | 역할/영역 | 담당 내용 |
 |---|---|
