@@ -77,6 +77,7 @@ StockNews는 **실시간 주식 시세와 뉴스 데이터**를 수집·분석�
 
 <details>
 <summary>핵심 코드 (Python/Scikit-learn) 보기</summary>
+```python
 # TfidfVectorizer를 활용한 뉴스 벡터화 및 유사도 계산
 vectorizer = TfidfVectorizer(max_features=1000, lowercase=False, token_pattern=r"\S+")
 tfidf_matrix = vectorizer.fit_transform([query_tokens_str] + doc_tokens)
