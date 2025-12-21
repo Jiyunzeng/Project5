@@ -69,8 +69,6 @@ StockNews는 **실시간 주식 시세와 뉴스 데이터**를 수집·분석�
 
 ## 🔍 핵심 로직 및 구현 상세
 
-## 🔍 핵심 로직 및 구현 상세
-
 ### 1. TF-IDF 기반 뉴스 검색 랭킹 구현
 기존의 키워드 포함 여부 중심 검색 방식은 연관도가 낮다는 한계가 있었습니다. 이를 해결하기 위해 **TF-IDF 가중치와 코사인 유사도(Cosine Similarity)**를 활용한 랭킹 시스템을 구축했습니다.
 
@@ -96,7 +94,9 @@ doc_vecs = tfidf_matrix[1:]
 
 scores = cosine_similarity(query_vec, doc_vecs)[0]
 </details>
-2. 검색 정확도 향상을 위한 점수 보정 로직 (Heuristic Scoring)
+
+
+### 2. 검색 정확도 향상을 위한 점수 보정 로직 (Heuristic Scoring)
 통계적 유사도(TF-IDF) 점수만으로는 실제 사용자가 느끼는 ‘중요도’를 완벽히 반영하기 어렵습니다. 이를 보완하기 위해 뉴스 도메인에 특화된 가중치 시스템을 설계했습니다.
 
 제목 가중치: 검색어가 뉴스 제목에 포함된 경우 가점 부여
@@ -123,7 +123,9 @@ if len(positions) >= 2:
     proximity_score = max(0.0, 0.15 * (1 - min_gap / 80))
     score += proximity_score
 </details>
-3. 데이터 자산화를 위한 검색 로그 저장 구조
+
+
+### 3. 데이터 자산화를 위한 검색 로그 저장 구조
 검색 요청이 발생할 때마다 사용자의 검색 행태를 분석하기 위해 검색어와 검색 시점을 로그로 기록하는 파이프라인을 구축했습니다.
 
 설계 의도: 누적된 로그를 통해 인기 검색어 집계 및 자동완성 기능의 원천 데이터로 활용.
@@ -145,9 +147,10 @@ public List<Map<String, Object>> searchWithTfidf(@RequestParam("q") String query
     
     return newsService.searchWithTfidfRanking(query, category);
 }
-</details>'''
+</details>
 
-4. MongoDB Aggregation 기반 인기 검색어 기능
+
+### 4. MongoDB Aggregation 기반 인기 검색어 기능
 저장된 검색 로그를 활용하여 최근 24시간 동안 가장 많이 검색된 키워드를 실시간으로 집계하여 제공합니다.
 
 동작 흐름: 최근 24시간 로그 필터링 → 키워드 그룹화 및 카운트 → 빈도순 정렬 및 상위 5개 추출.
@@ -173,9 +176,10 @@ public List<Map<String, Object>> getTrendingKeywords(int hours) {
 
     return mongoTemplate.aggregate(agg, "search_log", Map.class).getMappedResults();
 }
-</details>'''
+</details>
 
-5. 실시간 자동완성 검색어 구현
+
+### 5. 실시간 자동완성 검색어 구현
 사용자가 검색어를 입력하는 과정에서 기존 검색 데이터를 기반으로 부분 일치하는 키워드를 실시간으로 제안합니다.
 
 기능 특징: 대소문자 구분 없는(Case-insensitive) 정규식 검색 적용 및 서버 부하 방지.
@@ -196,5 +200,6 @@ public List<String> getAutocompleteSuggestions(String query) {
     List<NewsTerm> results = mongoTemplate.find(searchQuery, NewsTerm.class, "news_terms");
     return results.stream().map(NewsTerm::getTerm).collect(Collectors.toList());
 }
-</details>'''
+</details>
+
 
