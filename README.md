@@ -67,7 +67,7 @@ StockNews는 **실시간 주식 시세와 뉴스 데이터**를 수집·분석�
 | 개발 도구 / IDE      | ![IntelliJ IDEA](https://img.shields.io/badge/IntelliJ%20IDEA-000000?style=flat&logo=intellijidea&logoColor=white)&nbsp;![STS](https://img.shields.io/badge/Spring%20Tool%20Suite-6DB33F?style=flat&logo=spring&logoColor=white)&nbsp;![VS Code](https://img.shields.io/badge/VS%20Code-007ACC?style=flat&logo=visualstudiocode&logoColor=white) |
 | 형상 관리 / 협업     | ![GitHub](https://img.shields.io/badge/GitHub-181717?style=flat&logo=github&logoColor=white)&nbsp;![Notion](https://img.shields.io/badge/Notion-000000?style=flat&logo=notion&logoColor=white) |
 
-## 🔍 핵심 로직 및 구현 상세
+## ⭐ 핵심 로직 및 구현 상세
 
 ### 1. TF-IDF 기반 뉴스 검색 랭킹 구현
 기존의 키워드 포함 여부 중심 검색 방식은 연관도가 낮다는 한계가 있었습니다. 이를 해결하기 위해 TF-IDF 가중치와 코사인 유사도(Cosine Similarity)를 활용한 랭킹 시스템을 구축했습니다.
