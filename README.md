@@ -4,16 +4,15 @@
 ![팀원 수](https://img.shields.io/badge/팀원-6명-green?style=flat-square)
 
 > 실시간 주식 시세와 뉴스 데이터를 수집·분석하여  
-> 형태소 분석과 TF-IDF 기반 검색을 제공하는  
-> 데이터 기반 웹 서비스
+> 형태소 분석과 TF-IDF 기반 검색을 제공하는 데이터 기반 웹 서비스
 
 <img src="https://github.com/user-attachments/assets/1231967b-c1d3-4f0e-8ad4-81def337bf63" alt="프로젝트 메인 대시보드 스크린샷" />
 
+## 📖 프로젝트 소개
 ---
 
-## 📖 프로젝트 소개
-
 ### 📌 프로젝트 개요
+-
 StockNews는 **실시간 주식 시세와 뉴스 데이터**를 수집·분석하여  
 **형태소 분석과 TF-IDF 기반 검색 기능**을 제공하는  
 데이터 기반 웹 서비스 프로젝트입니다.
