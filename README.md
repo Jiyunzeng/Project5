@@ -76,7 +76,7 @@ StockNews는 **실시간 주식 시세와 뉴스 데이터**를 수집·분석�
 - **성과**: 단순 키워드 일치가 아닌, 문맥적 연관성이 높은 뉴스를 상위에 노출하여 검색 정확도를 개선했습니다.
 
 <details>
-<summary><strong>🔍 핵심 코드 보기</strong></summary>
+<summary><strong>🔍 핵심 코드 보기 </strong></summary>
 
 ```python
 from sklearn.feature_extraction.text import TfidfVectorizer
@@ -97,7 +97,7 @@ scores = ;
 </details>
 
 ### 2. 검색 정확도 향상을 위한 점수 보정 로직 (Heuristic Scoring)
-통계적 유사도(TF-IDF) 점수만으로는 실제 사용자가 느끼는 ‘중요도’를 완벽히 반영하기 어렵습니다. 이를 보완하기 위해 뉴스 도메인에 특화된 가중치 시스템을 설계했습니다.
+통계적 유사도(TF-IDF) 점수만으로는 실제 사용자가 느끼는 ‘중요도’를 완벽히 반영하기 어렵다고 느꼈습니다. 이를 보완하기 위해 뉴스 도메인에 특화된 가중치 시스템을 설계했습니다.
 
 - **제목 가중치**: 검색어가 뉴스 제목에 포함된 경우 가점 부여
 
@@ -133,7 +133,7 @@ if len(positions) >= 2:
 
 - **기술 스택**: Spring Boot와 MongoDB를 연동하여 비정형 로그 데이터를 효율적으로 적재.
 
-<details> <summary><strong>🔍 검색 로그 저장 로직 (Java) 보기</strong></summary>
+<details> <summary><strong>🔍 검색 로그 저장 로직 보기</strong></summary>
 
 ```Java
 // NewsSearchController.java
@@ -158,7 +158,7 @@ public List<Map<String, Object>> searchWithTfidf(@RequestParam("q") String query
 
 - **성과**: 사용자가 현재 시장의 주요 이슈를 직관적으로 파악하도록 유도.
 
-<details> <summary><strong>🔍 인기 검색어 집계 코드 (Java/MongoDB) 보기</strong></summary>
+<details> <summary><strong>🔍 인기 검색어 집계 코드 보기</strong></summary>
 
 ```Java
 // NewsServiceImpl.java
@@ -186,7 +186,7 @@ public List<Map<String, Object>> getTrendingKeywords(int hours) {
 
 - **성과**: 검색 입력 편의성을 높이고 원하는 검색어 도달 시간 단축.
 
-<details> <summary><strong>🔍 자동완성 검색 로직 (Java/MongoDB) 보기</strong></summary>
+<details> <summary><strong>🔍 자동완성 검색 로직 보기</strong></summary>
 
 ```Java
 // NewsServiceImpl.java
