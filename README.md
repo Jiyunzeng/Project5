@@ -108,7 +108,7 @@ scores = ;
 임계값 필터링: 일정 점수 이하 결과 제거로 노이즈 감소
 
 <details> <summary><strong>⚖️ 점수 보정 가중치 로직 보기</strong></summary>
-python
+```python
 코드 복사
 # 1) 제목 위치 기반 가중치 강화
 pos_title = title_lower.find(q_lower)
