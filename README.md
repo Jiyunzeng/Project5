@@ -68,15 +68,15 @@ StockNews는 **실시간 주식 시세와 뉴스 데이터**를 수집·분석�
 | 형상 관리 / 협업     | ![GitHub](https://img.shields.io/badge/GitHub-181717?style=flat&logo=github&logoColor=white)&nbsp;![Notion](https://img.shields.io/badge/Notion-000000?style=flat&logo=notion&logoColor=white) |
 
 ## 🔍 핵심 로직 및 구현 상세
+
 ### 1. TF-IDF 기반 뉴스 검색 랭킹 구현
-기존의 키워드 포함 여부 중심 검색 방식은 연관도가 낮다는 한계가 있었습니다. 이를 해결하기 위해 **TF-IDF 가중치와 코사인 유사도(Cosine Similarity)** 를 활용한 랭킹 시스템을 구축했습니다.
+기존의 키워드 포함 여부 중심 검색 방식은 연관도가 낮다는 한계가 있었습니다. 이를 해결하기 위해 **TF-IDF 가중치와 코사인 유사도(Cosine Similarity)**를 활용한 랭킹 시스템을 구축했습니다.
 
-
-**동작 흐름**: 카테고리별 후보 데이터 선조회 → 제목 및 본문 기반 TF-IDF 벡터화 → 유사도 점수 산출 및 정렬  
-**성과**: 단순 키워드 일치가 아닌, 문맥적 연관성이 높은 뉴스를 상위에 노출하여 검색 정확도를 대폭 개선했습니다.
+* **동작 흐름**: 카테고리별 후보 데이터 선조회 → 제목 및 본문 기반 TF-IDF 벡터화 → 유사도 점수 산출 및 정렬
+* **성과**: 단순 키워드 일치가 아닌, 문맥적 연관성이 높은 뉴스를 상위에 노출하여 검색 정확도를 개선했습니다.
 
 <details>
-<summary><strong> 핵심 코드 보기</strong></summary>
+<summary><strong>🔍 핵심 코드 보기</strong></summary>
 
 ```python
 from sklearn.feature_extraction.text import TfidfVectorizer
@@ -94,23 +94,26 @@ doc_vecs = tfidf_matrix[1:]  # 뉴스 문서들 벡터
 scores = cosine_similarity(query_vec, doc_vecs)[0]
 </details>
 
-### 2. 검색 정확도 향상을 위한 점수 보정 로직 (Heuristic Scoring)
+2. 검색 정확도 향상을 위한 점수 보정 로직 (Heuristic Scoring)
 통계적 유사도(TF-IDF) 점수만으로는 실제 사용자가 느끼는 '중요도'를 완벽히 반영하기 어렵습니다. 이를 보완하기 위해 뉴스 도메인에 특화된 가중치 시스템을 직접 설계했습니다.
 
-* **보정 기준**:
-    * **제목 가중치**: 검색어가 뉴스 제목에 포함된 경우 연관도가 높다고 판단하여 가점 부여.
-    * **위치 가중치**: 뉴스 본문의 앞부분(상단)에 키워드가 등장할수록 높은 점수 할당.
-    * **근접도(Proximity)**: 여러 키워드가 본문 내에서 서로 가까운 위치에 등장할 경우 가산점 반영.
+보정 기준:
 
-<details>
-<summary><strong> 점수 보정 가중치 로직 보기</strong></summary>
+제목 가중치: 검색어가 뉴스 제목에 포함된 경우 가점 부여.
 
-```python
+위치 가중치: 뉴스 본문의 앞부분(상단)에 키워드가 등장할수록 높은 점수 할당.
+
+근접도(Proximity): 여러 키워드가 본문 내에서 서로 가까운 위치에 등장할 경우 가산점 반영.
+
+<details> <summary><strong>⚖️ 점수 보정 가중치 로직 보기</strong></summary>
+
+Python
+
 # 1. 제목 위치 기반 가중치 강화
 pos_title = title_lower.find(q_lower)
 if pos_title != -1:
     title_pos_score = max(0.05, 0.20 * (1 - pos_title / max(len(title_lower), 1)))
-    score += title_pos_score #
+    score += title_pos_score
 
 # 2. 본문 내 키워드 근접도(Proximity) 점수 계산
 if len(positions) >= 2:
@@ -118,17 +121,17 @@ if len(positions) >= 2:
     min_gap = min(positions[i+1] - positions[i] for i in range(len(positions)-1))
     # 키워드 간 거리가 80자 이내일 경우 밀접도가 높다고 판단
     proximity_score = max(0.0, 0.15 * (1 - min_gap / 80))
-    score += proximity_score #
+    score += proximity_score
 </details>
 
-###3. 데이터 자산화를 위한 검색 로그 저장 구조
+3. 데이터 자산화를 위한 검색 로그 저장 구조
 검색 요청이 발생할 때마다 사용자의 검색 행태를 분석하기 위해 검색어와 검색 시점을 로그로 기록하는 파이프라인을 구축했습니다.
 
-설계 의도: 일회성 검색에 그치지 않고, 누적된 로그를 통해 인기 검색어 집계 및 자동완성 기능의 원천 데이터로 활용.
+설계 의도: 누적된 로그를 통해 인기 검색어 집계 및 자동완성 기능의 원천 데이터로 활용.
 
 기술 스택: Spring Boot와 MongoDB를 연동하여 비정형 로그 데이터를 효율적으로 적재.
 
-<details> <summary><strong> 검색 로그 저장 로직 (Java) 보기</strong></summary>
+<details> <summary><strong>💾 검색 로그 저장 로직 (Java) 보기</strong></summary>
 
 Java
 
@@ -139,20 +142,20 @@ public List<Map<String, Object>> searchWithTfidf(@RequestParam("q") String query
     SearchLog log = new SearchLog();
     log.setKeyword(query);
     log.setTimestamp(new Date());
-    searchLogRepository.save(log); //
+    searchLogRepository.save(log); 
     
     return newsService.searchWithTfidfRanking(query, category);
 }
 </details>
 
-###4. MongoDB Aggregation 기반 인기 검색어 기능
+4. MongoDB Aggregation 기반 인기 검색어 기능
 저장된 검색 로그를 활용하여 최근 24시간 동안 가장 많이 검색된 키워드를 실시간으로 집계하여 제공합니다.
 
 동작 흐름: 최근 24시간 로그 필터링 → 키워드 그룹화 및 카운트 → 빈도순 정렬 및 상위 5개 추출.
 
-성과: 사용자가 현재 시장의 주요 이슈를 직관적으로 파악할 수 있도록 검색 탐색 효율 증대.
+성과: 사용자가 현재 시장의 주요 이슈를 직관적으로 파악하도록 유도.
 
-<details> <summary><strong> 인기 검색어 집계 코드 (Java/MongoDB) 보기</strong></summary>
+<details> <summary><strong>🔥 인기 검색어 집계 코드 (Java/MongoDB) 보기</strong></summary>
 
 Java
 
@@ -173,14 +176,14 @@ public List<Map<String, Object>> getTrendingKeywords(int hours) {
 }
 </details>
 
-###5. 실시간 자동완성 검색어 구현
+5. 실시간 자동완성 검색어 구현
 사용자가 검색어를 입력하는 과정에서 기존 검색 데이터를 기반으로 부분 일치하는 키워드를 실시간으로 제안합니다.
 
-기능 특징: 대소문자 구분 없는(Case-insensitive) 정규식 검색 적용 및 결과 개수 제한을 통한 서버 부하 방지.
+기능 특징: 대소문자 구분 없는(Case-insensitive) 정규식 검색 적용 및 서버 부하 방지.
 
-UI/UX: 검색 입력 흐름을 방해하지 않는 드롭다운 방식 설계로 사용자 편의성 극대화.
+성과: 검색 입력 편의성을 높이고 원하는 검색어 도달 시간 단축.
 
-<details> <summary><strong> 자동완성 검색 로직 (Java/MongoDB) 보기</strong></summary>
+<details> <summary><strong>⌨️ 자동완성 검색 로직 (Java/MongoDB) 보기</strong></summary>
 
 Java
 
@@ -189,11 +192,10 @@ public List<String> getAutocompleteSuggestions(String query) {
     Query searchQuery = new Query();
     // Regex를 활용한 대소문자 무시 부분 일치 검색
     searchQuery.addCriteria(Criteria.where("term").regex(query, "i")); 
-    searchQuery.limit(10); // 성능 향상을 위한 결과 제한
+    searchQuery.limit(10); 
 
     List<NewsTerm> results = mongoTemplate.find(searchQuery, NewsTerm.class, "news_terms");
     return results.stream().map(NewsTerm::getTerm).collect(Collectors.toList());
 }
 </details>
-
 
