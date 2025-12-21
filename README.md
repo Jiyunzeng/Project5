@@ -78,7 +78,8 @@ StockNews는 **실시간 주식 시세와 뉴스 데이터**를 수집·분석�
 <details>
 <summary><strong>🔍 핵심 코드 보기</strong></summary>
 
-```python
+python
+
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
 
@@ -108,7 +109,8 @@ scores = ;
 임계값 필터링: 일정 점수 이하 결과 제거로 노이즈 감소
 
 <details> <summary><strong>⚖️ 점수 보정 가중치 로직 보기</strong></summary>
-'''python
+python
+
 # 1) 제목 위치 기반 가중치 강화
 pos_title = title_lower.find(q_lower)
 if pos_title != -1:
@@ -134,7 +136,8 @@ if len(positions) >= 2:
 
 <details> <summary><strong>💾 검색 로그 저장 로직 (Java) 보기</strong></summary>
 
-'''Java
+Java
+
 // NewsSearchController.java
 @GetMapping("/search-tfidf")
 public List<Map<String, Object>> searchWithTfidf(@RequestParam("q") String query) {
@@ -159,7 +162,7 @@ public List<Map<String, Object>> searchWithTfidf(@RequestParam("q") String query
 
 <details> <summary><strong>🔥 인기 검색어 집계 코드 (Java/MongoDB) 보기</strong></summary>
 
-'''Java
+Java
 
 // NewsServiceImpl.java
 public List<Map<String, Object>> getTrendingKeywords(int hours) {
@@ -188,7 +191,7 @@ public List<Map<String, Object>> getTrendingKeywords(int hours) {
 
 <details> <summary><strong>⌨️ 자동완성 검색 로직 (Java/MongoDB) 보기</strong></summary>
 
-'''Java
+Java
 
 // NewsServiceImpl.java
 public List<String> getAutocompleteSuggestions(String query) {
