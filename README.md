@@ -76,7 +76,7 @@ StockNews는 **실시간 주식 시세와 뉴스 데이터**를 수집·분석�
 **성과**: 단순 키워드 일치가 아닌, 문맥적 연관성이 높은 뉴스를 상위에 노출하여 검색 정확도를 대폭 개선했습니다.
 
 <details>
-<summary><strong>▼ 핵심 코드 (Python/Scikit-learn) 보기</strong></summary>
+<summary><strong> 핵심 코드 (Python/Scikit-learn) 보기</strong></summary>
 
 ```python
 from sklearn.feature_extraction.text import TfidfVectorizer
