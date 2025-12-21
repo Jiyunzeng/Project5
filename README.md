@@ -93,3 +93,107 @@ doc_vecs = tfidf_matrix[1:]  # 뉴스 문서들 벡터
 # 코사인 유사도를 통한 검색 연관도 점수 산출
 scores = cosine_similarity(query_vec, doc_vecs)[0]
 </details>
+
+### 2. 검색 정확도 향상을 위한 점수 보정 로직 (Heuristic Scoring)
+통계적 유사도(TF-IDF) 점수만으로는 실제 사용자가 느끼는 '중요도'를 완벽히 반영하기 어렵습니다. 이를 보완하기 위해 뉴스 도메인에 특화된 가중치 시스템을 직접 설계했습니다.
+
+* **보정 기준**:
+    * **제목 가중치**: 검색어가 뉴스 제목에 포함된 경우 연관도가 높다고 판단하여 가점 부여.
+    * **위치 가중치**: 뉴스 본문의 앞부분(상단)에 키워드가 등장할수록 높은 점수 할당.
+    * **근접도(Proximity)**: 여러 키워드가 본문 내에서 서로 가까운 위치에 등장할 경우 가산점 반영.
+
+<details>
+<summary><strong>▼ 점수 보정 가중치 로직 보기</strong></summary>
+
+```python
+# 1. 제목 위치 기반 가중치 강화
+pos_title = title_lower.find(q_lower)
+if pos_title != -1:
+    title_pos_score = max(0.05, 0.20 * (1 - pos_title / max(len(title_lower), 1)))
+    score += title_pos_score #
+
+# 2. 본문 내 키워드 근접도(Proximity) 점수 계산
+if len(positions) >= 2:
+    positions.sort()
+    min_gap = min(positions[i+1] - positions[i] for i in range(len(positions)-1))
+    # 키워드 간 거리가 80자 이내일 경우 밀접도가 높다고 판단
+    proximity_score = max(0.0, 0.15 * (1 - min_gap / 80))
+    score += proximity_score #
+</details>
+
+###3. 데이터 자산화를 위한 검색 로그 저장 구조
+검색 요청이 발생할 때마다 사용자의 검색 행태를 분석하기 위해 검색어와 검색 시점을 로그로 기록하는 파이프라인을 구축했습니다.
+
+설계 의도: 일회성 검색에 그치지 않고, 누적된 로그를 통해 인기 검색어 집계 및 자동완성 기능의 원천 데이터로 활용.
+
+기술 스택: Spring Boot와 MongoDB를 연동하여 비정형 로그 데이터를 효율적으로 적재.
+
+<details> <summary><strong>▼ 검색 로그 저장 로직 (Java) 보기</strong></summary>
+
+Java
+
+// NewsSearchController.java
+@GetMapping("/search-tfidf")
+public List<Map<String, Object>> searchWithTfidf(@RequestParam("q") String query) {
+    // 검색 요청 시마다 로그 객체 생성 및 MongoDB 저장
+    SearchLog log = new SearchLog();
+    log.setKeyword(query);
+    log.setTimestamp(new Date());
+    searchLogRepository.save(log); //
+    
+    return newsService.searchWithTfidfRanking(query, category);
+}
+</details>
+
+###4. MongoDB Aggregation 기반 인기 검색어 기능
+저장된 검색 로그를 활용하여 최근 24시간 동안 가장 많이 검색된 키워드를 실시간으로 집계하여 제공합니다.
+
+동작 흐름: 최근 24시간 로그 필터링 → 키워드 그룹화 및 카운트 → 빈도순 정렬 및 상위 5개 추출.
+
+성과: 사용자가 현재 시장의 주요 이슈를 직관적으로 파악할 수 있도록 검색 탐색 효율 증대.
+
+<details> <summary><strong>▼ 인기 검색어 집계 코드 (Java/MongoDB) 보기</strong></summary>
+
+Java
+
+// NewsServiceImpl.java
+public List<Map<String, Object>> getTrendingKeywords(int hours) {
+    LocalDateTime since = LocalDateTime.now().minusHours(hours);
+    Date sinceDate = Date.from(since.atZone(ZoneId.systemDefault()).toInstant());
+
+    // MongoDB Aggregation 파이프라인 구성
+    Aggregation agg = Aggregation.newAggregation(
+        Aggregation.match(Criteria.where("timestamp").gte(sinceDate)), // 시간 필터
+        Aggregation.group("keyword").count().as("count"),              // 그룹화 및 카운트
+        Aggregation.sort(Sort.Direction.DESC, "count"),                // 정렬
+        Aggregation.limit(5)                                           // TOP 5 추출
+    );
+
+    return mongoTemplate.aggregate(agg, "search_log", Map.class).getMappedResults();
+}
+</details>
+
+###5. 실시간 자동완성 검색어 구현
+사용자가 검색어를 입력하는 과정에서 기존 검색 데이터를 기반으로 부분 일치하는 키워드를 실시간으로 제안합니다.
+
+기능 특징: 대소문자 구분 없는(Case-insensitive) 정규식 검색 적용 및 결과 개수 제한을 통한 서버 부하 방지.
+
+UI/UX: 검색 입력 흐름을 방해하지 않는 드롭다운 방식 설계로 사용자 편의성 극대화.
+
+<details> <summary><strong>▼ 자동완성 검색 로직 (Java/MongoDB) 보기</strong></summary>
+
+Java
+
+// NewsServiceImpl.java
+public List<String> getAutocompleteSuggestions(String query) {
+    Query searchQuery = new Query();
+    // Regex를 활용한 대소문자 무시 부분 일치 검색
+    searchQuery.addCriteria(Criteria.where("term").regex(query, "i")); 
+    searchQuery.limit(10); // 성능 향상을 위한 결과 제한
+
+    List<NewsTerm> results = mongoTemplate.find(searchQuery, NewsTerm.class, "news_terms");
+    return results.stream().map(NewsTerm::getTerm).collect(Collectors.toList());
+}
+</details>
+
+
