@@ -93,7 +93,6 @@ query_vec = tfidf_matrix[0:1]
 doc_vecs = tfidf_matrix[1:]
 
 scores = ;
-...
 </details>```
 
 ### 2. 검색 정확도 향상을 위한 점수 보정 로직 (Heuristic Scoring)
@@ -122,7 +121,6 @@ if len(positions) >= 2:
     min_gap = min(positions[i+1] - positions[i] for i in range(len(positions)-1))
     proximity_score = max(0.0, 0.15 * (1 - min_gap / 80))
     score += proximity_score
-...
 </details>```
 
 
@@ -148,7 +146,7 @@ public List<Map<String, Object>> searchWithTfidf(@RequestParam("q") String query
     
     return newsService.searchWithTfidfRanking(query, category);
 }
-...
+
 </details>```
 
 
@@ -178,7 +176,7 @@ public List<Map<String, Object>> getTrendingKeywords(int hours) {
 
     return mongoTemplate.aggregate(agg, "search_log", Map.class).getMappedResults();
 }
-...
+
 </details>```
 
 ### 5. 실시간 자동완성 검색어 구현
@@ -202,7 +200,7 @@ public List<String> getAutocompleteSuggestions(String query) {
     List<NewsTerm> results = mongoTemplate.find(searchQuery, NewsTerm.class, "news_terms");
     return results.stream().map(NewsTerm::getTerm).collect(Collectors.toList());
 }
-...
+
 </details>```
 
 
