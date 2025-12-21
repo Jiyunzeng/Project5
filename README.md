@@ -69,16 +69,14 @@ StockNews는 **실시간 주식 시세와 뉴스 데이터**를 수집·분석�
 
 🔍 핵심 로직 및 구현 상세
 1. TF-IDF 기반 뉴스 검색 랭킹 구현
-기존의 키워드 포함 여부 중심 검색 방식은 연관도가 낮다는 한계가 있었습니다. 이를 해결하기 위해 **TF-IDF 가중치와 코사인 유사도(Cosine Similarity)**를 활용한 랭킹 시스템을 직접 구축했습니다.
+기존의 키워드 포함 여부 중심 검색 방식은 연관도가 낮다는 한계가 있었습니다. 이를 해결하기 위해 **TF-IDF 가중치와 코사인 유사도(Cosine Similarity)**를 활용한 랭킹 시스템을 구축했습니다.
 
-동작 흐름: 카테고리별 후보 데이터 선조회 → 제목 및 본문 기반 TF-IDF 벡터화 → 유사도 점수 산출 및 정렬
+**동작흐름** : 카테고리별 후보 데이터 선조회 → 제목 및 본문 기반 TF-IDF 벡터화 → 유사도 점수 산출 및 정렬
 
-성과: 단순 키워드 일치가 아닌, 문맥적 연관성이 높은 뉴스를 상위에 노출하여 검색 정확도를 대폭 개선했습니다.
+**성과**: 단순 키워드 일치가 아닌, 문맥적 연관성이 높은 뉴스를 상위에 노출하여 검색 정확도를 대폭 개선했습니다.
 
-<details> <summary>핵심 코드 (Python/Scikit-learn) 보기</summary>
-
-Python
-
+<details>
+<summary>핵심 코드 (Python/Scikit-learn) 보기</summary>
 # TfidfVectorizer를 활용한 뉴스 벡터화 및 유사도 계산
 vectorizer = TfidfVectorizer(max_features=1000, lowercase=False, token_pattern=r"\S+")
 tfidf_matrix = vectorizer.fit_transform([query_tokens_str] + doc_tokens)
@@ -86,58 +84,3 @@ tfidf_matrix = vectorizer.fit_transform([query_tokens_str] + doc_tokens)
 query_vec = tfidf_matrix[0:1] # 검색어 벡터
 doc_vecs = tfidf_matrix[1:]  # 문서들 벡터
 scores = cosine_similarity(query_vec, doc_vecs)[0]
-</details>
-
-2. 검색 정확도 향상을 위한 점수 보정 로직 (Heuristic Scoring)
-통계적 수치인 TF-IDF 점수만으로는 실제 사용자 체감 품질을 완벽히 반영하기 어렵다고 판단하여, 한국어 뉴스 특성을 반영한 가중치 보정 로직을 추가했습니다.
-
-주요 보정 기준:
-
-제목 가중치: 키워드가 제목에 포함된 경우 추가 가점.
-
-위치 가중치: 본문 상단(앞부분)에 키워드가 등장할수록 높은 점수 반영.
-
-근접도(Proximity): 여러 키워드가 본문 내 가까운 위치에 등장할 경우 가중치 부여.
-
-성과: 알고리즘 결과에 도메인 지식을 결합하여 사용자 관점에서 훨씬 자연스러운 검색 결과를 제공합니다.
-
-<details> <summary>핵심 코드 (Python) 보기</summary>
-
-Python
-
-# 1) 위치 기반 가중치: 제목/본문 앞쪽에 나타날수록 높은 점수
-pos_title = title_lower.find(q_lower)
-if pos_title != -1:
-    score += max(0.05, 0.20 * (1 - pos_title / max(len(title_lower), 1)))
-
-# 2) 근접도(Proximity): 키워드 간의 간격이 80자 이내일 경우 가점
-if len(positions) >= 2:
-    min_gap = min(positions[i+1] - positions[i] for i in range(len(positions)-1))
-    score += max(0.0, 0.15 * (1 - min_gap / 80))
-</details>
-
-3. 데이터 자산화를 위한 검색 로그 저장 구조
-검색 요청이 발생할 때마다 검색어와 시점을 로그로 기록하여, 일회성 조회를 넘어선 데이터 확장 구조를 설계했습니다.
-
-설계 의도: 사용자 행동 데이터를 축적하여 인기 검색어 집계 및 자동완성의 원천 데이터로 활용.
-
-적용 기술: MongoDB를 통한 비정형 로그 데이터 적재.
-
-4. 검색 로그 기반 실시간 인기 검색어 및 자동완성
-축적된 데이터를 가공하여 사용자에게 실시간 검색 트렌드와 편의 기능을 제공합니다.
-
-인기 검색어: MongoDB Aggregation을 활용해 최근 24시간 내 빈도수 기반 상위 키워드 추출.
-
-자동완성: 부분 일치 검색과 대소문자 무시 검색을 적용하여 사용자 경험(UX) 개선.
-
-<details> <summary>인기 검색어 집계 코드 (Java/MongoDB Aggregation) 보기</summary>
-
-Java
-
-Aggregation agg = Aggregation.newAggregation(
-    Aggregation.match(Criteria.where("timestamp").gte(sinceDate)), // 최근 24시간 필터
-    Aggregation.group("keyword").count().as("count"),              // 키워드 그룹화 및 카운트
-    Aggregation.sort(Sort.Direction.DESC, "count"),                // 빈도순 정렬
-    Aggregation.limit(5)                                           // 상위 5개 추출
-);
-</details>
