@@ -92,7 +92,7 @@ doc_vecs = tfidf_matrix[1:]  # 뉴스 문서들 벡터
 
 # 코사인 유사도를 통한 검색 연관도 점수 산출
 scores = cosine_similarity(query_vec, doc_vecs)[0]
-</details>
+</details>'''
 
 2. 검색 정확도 향상을 위한 점수 보정 로직 (Heuristic Scoring)
 통계적 유사도(TF-IDF) 점수만으로는 실제 사용자가 느끼는 '중요도'를 완벽히 반영하기 어렵습니다. 이를 보완하기 위해 뉴스 도메인에 특화된 가중치 시스템을 직접 설계했습니다.
@@ -122,7 +122,7 @@ if len(positions) >= 2:
     # 키워드 간 거리가 80자 이내일 경우 밀접도가 높다고 판단
     proximity_score = max(0.0, 0.15 * (1 - min_gap / 80))
     score += proximity_score
-</details>
+</details>'''
 
 3. 데이터 자산화를 위한 검색 로그 저장 구조
 검색 요청이 발생할 때마다 사용자의 검색 행태를 분석하기 위해 검색어와 검색 시점을 로그로 기록하는 파이프라인을 구축했습니다.
@@ -146,7 +146,7 @@ public List<Map<String, Object>> searchWithTfidf(@RequestParam("q") String query
     
     return newsService.searchWithTfidfRanking(query, category);
 }
-</details>
+</details>'''
 
 4. MongoDB Aggregation 기반 인기 검색어 기능
 저장된 검색 로그를 활용하여 최근 24시간 동안 가장 많이 검색된 키워드를 실시간으로 집계하여 제공합니다.
@@ -174,7 +174,7 @@ public List<Map<String, Object>> getTrendingKeywords(int hours) {
 
     return mongoTemplate.aggregate(agg, "search_log", Map.class).getMappedResults();
 }
-</details>
+</details>'''
 
 5. 실시간 자동완성 검색어 구현
 사용자가 검색어를 입력하는 과정에서 기존 검색 데이터를 기반으로 부분 일치하는 키워드를 실시간으로 제안합니다.
@@ -197,5 +197,5 @@ public List<String> getAutocompleteSuggestions(String query) {
     List<NewsTerm> results = mongoTemplate.find(searchQuery, NewsTerm.class, "news_terms");
     return results.stream().map(NewsTerm::getTerm).collect(Collectors.toList());
 }
-</details>
+</details>'''
 
