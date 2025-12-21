@@ -78,7 +78,7 @@ StockNews는 **실시간 주식 시세와 뉴스 데이터**를 수집·분석�
 <details>
 <summary><strong>🔍 핵심 코드 보기</strong></summary>
 
-'''python
+```python
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
 
@@ -93,7 +93,7 @@ query_vec = tfidf_matrix[0:1]
 doc_vecs = tfidf_matrix[1:]
 
 scores = ;
-'''
+```
 </details>
 
 ### 2. 검색 정확도 향상을 위한 점수 보정 로직 (Heuristic Scoring)
@@ -108,7 +108,7 @@ scores = ;
 임계값 필터링: 일정 점수 이하 결과 제거로 노이즈 감소
 
 <details> <summary><strong>⚖️ 점수 보정 가중치 로직 보기</strong></summary>
-'''python
+```python
 # 1) 제목 위치 기반 가중치 강화
 pos_title = title_lower.find(q_lower)
 if pos_title != -1:
@@ -121,7 +121,7 @@ if len(positions) >= 2:
     min_gap = min(positions[i+1] - positions[i] for i in range(len(positions)-1))
     proximity_score = max(0.0, 0.15 * (1 - min_gap / 80))
     score += proximity_score
-'''
+```
 </details>
 
 
@@ -134,7 +134,7 @@ if len(positions) >= 2:
 
 <details> <summary><strong>💾 검색 로그 저장 로직 (Java) 보기</strong></summary>
 
-'''Java
+```Java
 // NewsSearchController.java
 @GetMapping("/search-tfidf")
 public List<Map<String, Object>> searchWithTfidf(@RequestParam("q") String query) {
@@ -146,7 +146,7 @@ public List<Map<String, Object>> searchWithTfidf(@RequestParam("q") String query
     
     return newsService.searchWithTfidfRanking(query, category);
 }
-'''
+```
 </details>
 
 
@@ -159,7 +159,7 @@ public List<Map<String, Object>> searchWithTfidf(@RequestParam("q") String query
 
 <details> <summary><strong>🔥 인기 검색어 집계 코드 (Java/MongoDB) 보기</strong></summary>
 
-'''Java
+```Java
 // NewsServiceImpl.java
 public List<Map<String, Object>> getTrendingKeywords(int hours) {
     LocalDateTime since = LocalDateTime.now().minusHours(hours);
@@ -175,7 +175,7 @@ public List<Map<String, Object>> getTrendingKeywords(int hours) {
 
     return mongoTemplate.aggregate(agg, "search_log", Map.class).getMappedResults();
 }
-'''
+```
 </details>
 
 ### 5. 실시간 자동완성 검색어 구현
@@ -187,7 +187,7 @@ public List<Map<String, Object>> getTrendingKeywords(int hours) {
 
 <details> <summary><strong>⌨️ 자동완성 검색 로직 (Java/MongoDB) 보기</strong></summary>
 
-'''Java
+```Java
 // NewsServiceImpl.java
 public List<String> getAutocompleteSuggestions(String query) {
     Query searchQuery = new Query();
@@ -198,7 +198,7 @@ public List<String> getAutocompleteSuggestions(String query) {
     List<NewsTerm> results = mongoTemplate.find(searchQuery, NewsTerm.class, "news_terms");
     return results.stream().map(NewsTerm::getTerm).collect(Collectors.toList());
 }
-'''
+```
 </details>
 
 
