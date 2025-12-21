@@ -107,7 +107,7 @@ scores = ;
 
 - **임계값 필터링**: 일정 점수 이하 결과 제거로 노이즈 감소
 
-<details> <summary><strong>⚖️ 점수 보정 가중치 로직 보기</strong></summary>
+<details> <summary><strong>🔍 점수 보정 가중치 로직 보기</strong></summary>
     
 ```python
 # 1) 제목 위치 기반 가중치 강화
@@ -133,7 +133,7 @@ if len(positions) >= 2:
 
 - **기술 스택**: Spring Boot와 MongoDB를 연동하여 비정형 로그 데이터를 효율적으로 적재.
 
-<details> <summary><strong>💾 검색 로그 저장 로직 (Java) 보기</strong></summary>
+<details> <summary><strong>🔍 검색 로그 저장 로직 (Java) 보기</strong></summary>
 
 ```Java
 // NewsSearchController.java
@@ -158,7 +158,7 @@ public List<Map<String, Object>> searchWithTfidf(@RequestParam("q") String query
 
 - **성과**: 사용자가 현재 시장의 주요 이슈를 직관적으로 파악하도록 유도.
 
-<details> <summary><strong>🔥 인기 검색어 집계 코드 (Java/MongoDB) 보기</strong></summary>
+<details> <summary><strong>🔍 인기 검색어 집계 코드 (Java/MongoDB) 보기</strong></summary>
 
 ```Java
 // NewsServiceImpl.java
@@ -186,7 +186,7 @@ public List<Map<String, Object>> getTrendingKeywords(int hours) {
 
 - **성과**: 검색 입력 편의성을 높이고 원하는 검색어 도달 시간 단축.
 
-<details> <summary><strong>⌨️ 자동완성 검색 로직 (Java/MongoDB) 보기</strong></summary>
+<details> <summary><strong>🔍 자동완성 검색 로직 (Java/MongoDB) 보기</strong></summary>
 
 ```Java
 // NewsServiceImpl.java
