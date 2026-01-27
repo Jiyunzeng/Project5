@@ -35,7 +35,9 @@ StockNews는 **실시간 주식 시세와 뉴스 데이터**를 수집·분석�
 <details>
   <summary>실시간 국내 주식 시세 조회 (KOSPI / KOSDAQ)</summary>
   <br>
-
+  <img width="749" height="745" alt="주식뉴스_주식시세1" src="https://github.com/user-attachments/assets/91ed0f64-a8ae-4446-a7ab-99ce6e09f10a" />
+  <br>
+  <img width="649" height="888" alt="주식뉴스_주식시세2" src="https://github.com/user-attachments/assets/b7eba3d7-68a9-4563-89a7-edc045e4363a" />
 </details>
 <details>
   <summary>국내·해외 주식 뉴스 자동 수집 및 제공</summary>
@@ -45,11 +47,12 @@ StockNews는 **실시간 주식 시세와 뉴스 데이터**를 수집·분석�
 <details>
   <summary>형태소 분석 기반 뉴스 검색</summary>
   <br>
-
+  
 </details>
 <details>
   <summary>TF-IDF 가중치를 적용한 검색 결과 랭킹 제공</summary>
   <br>
+  <img width="1919" height="1079" alt="주식뉴스_검색" src="https://github.com/user-attachments/assets/b9547062-ddb0-4269-ad53-5858e8ac7fb8" />
 
 </details>
 <details>
