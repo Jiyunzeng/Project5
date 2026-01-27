@@ -32,14 +32,46 @@ StockNews는 **실시간 주식 시세와 뉴스 데이터**를 수집·분석�
 
 ## ✨ 핵심 기능
 
-- 실시간 국내 주식 시세 조회 (KOSPI / KOSDAQ)
-- 국내·해외 주식 뉴스 자동 수집 및 제공
-- 형태소 분석 기반 뉴스 검색
-- TF-IDF 가중치를 적용한 검색 결과 랭킹 제공
-- 검색 로그 기반 인기 검색어 제공
-- 자동완성 검색어 제공
-- AI 요약 제공
-- 다국어 지원
+<details>
+  <summary>실시간 국내 주식 시세 조회 (KOSPI / KOSDAQ)</summary>
+  <br>
+
+</details>
+<details>
+  <summary>국내·해외 주식 뉴스 자동 수집 및 제공</summary>
+  <br>
+
+</details>
+<details>
+  <summary>형태소 분석 기반 뉴스 검색</summary>
+  <br>
+
+</details>
+<details>
+  <summary>TF-IDF 가중치를 적용한 검색 결과 랭킹 제공</summary>
+  <br>
+
+</details>
+<details>
+  <summary>검색 로그 기반 인기 검색어 제공</summary>
+  <br>
+
+</details>
+<details>
+  <summary>자동완성 검색어 제공</summary>
+  <br>
+
+</details>
+<details>
+  <summary>AI 요약 제공</summary>
+  <br>
+
+</details>
+<details>
+  <summary>다국어 지원</summary>
+  <br>
+
+</details>
 
 ## 👨‍💻 담당 역할
 
