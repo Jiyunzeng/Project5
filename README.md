@@ -30,7 +30,7 @@ StockNews는 **실시간 주식 시세와 뉴스 데이터**를 수집·분석�
 | 손원주 | 검색엔진 (형태소 분석 TF-IDF랭킹 오타보정), AI요약 등 | [![GitHub](https://img.shields.io/badge/GitHub-000000?style=flat&logo=github&logoColor=white)](https://github.com/swj6498) |
 | **지윤정** | 검색엔진 (형태소 분석 TF-IDF랭킹 오타보정), 인기검색어 등 | [![GitHub](https://img.shields.io/badge/GitHub-000000?style=flat&logo=github&logoColor=white)](https://github.com/Jiyunzeng) |
 
-## ✨ 핵심 기능
+## ✨ 주요 기능
 
 <details>
   <summary>실시간 국내 주식 시세 조회 (KOSPI / KOSDAQ)</summary>
