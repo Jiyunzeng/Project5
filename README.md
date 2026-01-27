@@ -109,7 +109,7 @@ StockNews는 **실시간 주식 시세와 뉴스 데이터**를 수집·분석�
 **성과**: 단순 키워드 일치가 아닌, 문맥적 연관성이 높은 뉴스를 상위에 노출하여 검색 정확도를 개선했습니다.
 
 <details>
-<summary><strong>🔍 구현 코드 보기 </strong></summary>
+<summary><strong>🔍 코드 보기</strong></summary>
 
 ```python
 from sklearn.feature_extraction.text import TfidfVectorizer
@@ -141,7 +141,7 @@ TF-IDF 유사도 점수만으로는 실제 검색 결과의 체감 정확도가 
 키워드 간 최소 거리(min_gap)를 기준으로 가산점을 적용.
 
 
-<details> <summary><strong>🔍 점수 보정 가중치 로직 보기</strong></summary>
+<details> <summary><strong>🔍 코드 보기</strong></summary>
     
 ```python
 # 1) 제목 위치 기반 가중치 강화
@@ -170,7 +170,7 @@ TF-IDF 검색 요청이 발생할 때마다
 
 - searchLogRepository.save()를 통해 MongoDB에 저장
 
-<details> <summary><strong>🔍 검색 로그 저장 로직 보기</strong></summary>
+<details> <summary><strong>🔍 코드 보기</strong></summary>
 
 ```Java
 // NewsSearchController.java
@@ -195,7 +195,7 @@ public List<Map<String, Object>> searchWithTfidf(@RequestParam("q") String query
 
 **성과**: 사용자가 현재 시장의 주요 이슈를 직관적으로 파악하도록 유도.
 
-<details> <summary><strong>🔍 인기 검색어 집계 코드 보기</strong></summary>
+<details> <summary><strong>🔍 코드 보기/strong></summary>
 
 ```Java
 // NewsServiceImpl.java
@@ -227,7 +227,7 @@ MongoDB에 저장된 검색어 데이터를 기반으로
 
 **성과**: 검색 입력 편의성을 높이고 원하는 검색어 도달 시간 단축
 
-<details> <summary><strong>🔍 자동완성 검색 로직 보기</strong></summary>
+<details> <summary><strong>🔍 코드 보기</strong></summary>
 
 ```Java
 // NewsServiceImpl.java
