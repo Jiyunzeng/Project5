@@ -63,12 +63,14 @@ StockNews는 **실시간 주식 시세와 뉴스 데이터**를 수집·분석�
 <details>
   <summary>자동완성 검색어 제공</summary>
   <br>
+  <img width="251" height="116" alt="image" src="https://github.com/user-attachments/assets/cae60032-a11f-48ee-b0a2-b72ee8f0bbd6" />
 
 </details>
 <details>
   <summary>AI 요약 제공</summary>
   <br>
-  <img width="1075" height="204" alt="주식뉴스_뉴스AI" src="https://github.com/user-attachments/assets/e5b7a0d8-b951-4af0-923d-6b11716ba8a5" />
+  <img width="365" height="67" alt="image" src="https://github.com/user-attachments/assets/3c182ae6-17c9-4339-916e-03a53d3a5705" />
+
 
 </details>
 <details>
