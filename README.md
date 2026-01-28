@@ -42,15 +42,12 @@ StockNews는 **실시간 주식 시세와 뉴스 데이터**를 수집·분석�
 <details>
   <summary>국내·해외 주식 뉴스 자동 수집 및 제공</summary>
   <br>
-
-</details>
-<details>
-  <summary>형태소 분석 기반 뉴스 검색</summary>
+  <img width="1690" height="1236" alt="image" src="https://github.com/user-attachments/assets/c1325d52-86d1-4d7d-8bdf-447736abedb3" />
   <br>
-  
+  <img width="2586" height="1346" alt="image" src="https://github.com/user-attachments/assets/525edc70-b753-4d3f-8502-45bf3bb07933" />
 </details>
 <details>
-  <summary>TF-IDF 가중치를 적용한 검색 결과 랭킹 제공</summary>
+  <summary>형태소 분석 / TF-IDF 가중치를 적용한 검색 결과 랭킹 제공</summary>
   <br>
   <img width="1919" height="1079" alt="주식뉴스_검색" src="https://github.com/user-attachments/assets/b9547062-ddb0-4269-ad53-5858e8ac7fb8" />
 
