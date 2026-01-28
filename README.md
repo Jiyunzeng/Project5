@@ -203,7 +203,7 @@ public List<Map<String, Object>> searchWithTfidf(@RequestParam("q") String query
 
 **성과**: 사용자가 현재 시장의 주요 이슈를 직관적으로 파악하도록 유도.
 
-<details> <summary><strong>🔍 코드 보기/strong></summary>
+<details> <summary><strong>🔍 코드 보기</strong></summary>
 
 ```Java
 // NewsServiceImpl.java
