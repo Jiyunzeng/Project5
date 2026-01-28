@@ -56,27 +56,27 @@ StockNews는 **실시간 주식 시세와 뉴스 데이터**를 수집·분석�
 
 </details>
 <details>
-  <summary>검색 로그 기반 인기 검색어 제공</summary>
+  <summary>인기 검색어 제공</summary>
   <br>
-
+  <img width="392" height="279" alt="스크린샷 2026-01-28 132404" src="https://github.com/user-attachments/assets/95aa4737-af1e-4456-8729-9e05d67e7e06" />
 </details>
 <details>
   <summary>자동완성 검색어 제공</summary>
   <br>
-  <img width="251" height="116" alt="image" src="https://github.com/user-attachments/assets/cae60032-a11f-48ee-b0a2-b72ee8f0bbd6" />
+  <img width="1004" height="464" alt="image" src="https://github.com/user-attachments/assets/adf33978-c7b7-484e-9314-20bc4109f26f" />
 
 </details>
 <details>
   <summary>AI 요약 제공</summary>
   <br>
-  <img width="365" height="67" alt="image" src="https://github.com/user-attachments/assets/3c182ae6-17c9-4339-916e-03a53d3a5705" />
-
-
+  <img width="1075" height="204" alt="주식뉴스_뉴스AI" src="https://github.com/user-attachments/assets/4bea5511-13d7-4026-898b-d6509fd9e1eb" />
 </details>
 <details>
   <summary>다국어 지원</summary>
   <br>
-
+  <img width="2574" height="1142" alt="주식뉴스_다국어지원1" src="https://github.com/user-attachments/assets/2758fdc7-571b-4872-9e05-22576ba1cf8e" />
+  <br>
+  <img width="2586" height="1296" alt="주식뉴스_다국어지원2" src="https://github.com/user-attachments/assets/5f8e72e1-0271-478c-b9a1-42095d8f047b" />
 </details>
 
 ## 👨‍💻 담당 역할
