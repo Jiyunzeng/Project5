@@ -45,6 +45,11 @@ StockNews는 **실시간 주식 시세와 뉴스 데이터**를 수집·분석�
   <img width="1690" height="1236" alt="image" src="https://github.com/user-attachments/assets/c1325d52-86d1-4d7d-8bdf-447736abedb3" />
   <br>
   <img width="2586" height="1346" alt="image" src="https://github.com/user-attachments/assets/525edc70-b753-4d3f-8502-45bf3bb07933" />
+  <br>
+  <img width="902" height="1006" alt="image" src="https://github.com/user-attachments/assets/725603d9-3789-4512-bb49-997b23c96d2b" />
+  <br>
+  <img width="1100" height="942" alt="image" src="https://github.com/user-attachments/assets/9f2818d7-82b6-4479-a01f-4592c4484894" />
+
 </details>
 <details>
   <summary>형태소 분석 / TF-IDF 가중치를 적용한 검색 결과 랭킹 제공</summary>
